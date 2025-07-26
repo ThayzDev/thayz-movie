@@ -26,7 +26,7 @@ const ShowMoreButton = ({
           disabled:cursor-not-allowed 
           text-white font-bold py-4 px-10 
           rounded-xl 
-          border-2 border-black 
+
           shadow-lg shadow-red-500/25
           transition-all duration-300 
           transform hover:scale-105
@@ -43,10 +43,7 @@ const ShowMoreButton = ({
             </>
           ) : (
             <>
-              <span className="text-lg font-semibold">Show More</span>
-              <span className="bg-black/30 px-2 py-1 rounded-md text-sm font-bold">
-                +{increment}
-              </span>
+              <span className="text-lg font-semibold">Watch More</span>
             </>
           )}
         </div>

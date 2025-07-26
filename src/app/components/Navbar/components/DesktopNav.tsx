@@ -11,9 +11,12 @@ const DesktopNav = () => {
       {/* Logo and Brand Name */}
       <div className="flex gap-3 items-center">
         <img src="/img/logo.png" alt="icon" className="h-14 w-14" />
-        <h1 className="text-white font-semibold text-2xl lg:text-4xl">
+        <NavLink
+          to="/movies"
+          className="text-white hover:text-red-600 font-semibold text-2xl lg:text-4xl transition-colors duration-200"
+        >
           TheMovies
-        </h1>
+        </NavLink>
       </div>
 
       {/* Navigation Links */}
