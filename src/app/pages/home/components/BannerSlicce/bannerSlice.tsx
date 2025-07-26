@@ -16,6 +16,16 @@ const BannerSlice: React.FC<BannerProps> = ({ movies }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const swiperRef = useRef<SwiperClass | null>(null);
 
+  useEffect(() => {
+    if (swiperRef.current) {
+      if (isTrailerOpen) {
+        // Không cần stop autoplay vì đã tắt
+      } else {
+        // Không cần start autoplay vì đã tắt
+      }
+    }
+  }, [isTrailerOpen]);
+
   if (!movies || movies.length === 0) {
     return (
       <div className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[700px] 2xl:h-[800px] bg-gray-800 flex items-center justify-center">
@@ -43,16 +53,6 @@ const BannerSlice: React.FC<BannerProps> = ({ movies }) => {
       swiperRef.current = swiper;
     },
   };
-
-  useEffect(() => {
-    if (swiperRef.current) {
-      if (isTrailerOpen) {
-        // Không cần stop autoplay vì đã tắt
-      } else {
-        // Không cần start autoplay vì đã tắt
-      }
-    }
-  }, [isTrailerOpen]);
 
   return (
     <div className="w-full min-h-[300px] sm:min-h-[400px] md:min-h-[500px] lg:min-h-[600px] xl:min-h-[700px] 2xl:min-h-[800px] relative">

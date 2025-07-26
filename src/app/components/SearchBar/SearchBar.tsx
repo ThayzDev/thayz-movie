@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { useSearchBar } from "./hooks/useSearchBar";
 import SearchInput from "./components/SearchInput";
+import { useSearchBar } from "./hooks/useSearchBar";
 
 interface SearchBarProps {
   onSearch: (query: string, category: string) => void;
@@ -23,7 +23,7 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
   } = useSearchBar(props);
 
   return (
-    <div className="w-full max-w-xl  ">
+    <div className="w-full max-w-lg  ">
       <form onSubmit={handleSubmit} className="relative">
         <SearchInput
           query={query}

@@ -36,11 +36,11 @@ const BannerPoster: React.FC<BannerPosterProps> = ({
   }, [poster_path, onAnimationComplete, isInitialLoad]);
 
   return (
-    <div className="w-full lg:w-1/3 mt-4 sm:mt-6 lg:mt-0 justify-center mr-0 sm:mr-4 md:mr-6 lg:mr-8 xl:mr-10 hidden lg:block transform-gpu ml-40">
+    <div className="w-full flex justify-center items-center h-full transform-gpu">
       <div className="relative">
         {poster_path ? (
           <Image
-            className={`rounded-2xl sm:rounded-3xl lg:rounded-4xl shadow-lg w-32 h-48 sm:w-40 sm:h-60 md:w-48 md:h-72 lg:w-56 lg:h-84 xl:w-72 xl:h-108 2xl:w-93 2xl:h-150 object-cover ${
+            className={`rounded-2xl lg:rounded-3xl xl:rounded-4xl shadow-lg w-56 h-84 lg:w-64 lg:h-96 xl:w-72 xl:h-108 2xl:w-100 2xl:h-140 object-cover ${
               isInitialLoad
                 ? `transform transition-all duration-1200 ease-out ${
                     isLoaded ? "scale-100 opacity-100" : "scale-75 opacity-0"
@@ -49,14 +49,14 @@ const BannerPoster: React.FC<BannerPosterProps> = ({
             }`}
             src={`https://image.tmdb.org/t/p/w500${poster_path}`}
             alt={title}
-            width={372}
-            height={600}
+            width={320}
+            height={480}
             priority
             onLoad={() => setIsLoaded(true)}
           />
         ) : (
           <div
-            className={`w-32 h-48 sm:w-40 sm:h-60 md:w-48 md:h-72 lg:w-56 lg:h-84 xl:w-72 xl:h-108 2xl:w-100 2xl:h-200 bg-gray-600 rounded-2xl sm:rounded-3xl lg:rounded-5xl flex items-center justify-center ${
+            className={`w-56 h-84 lg:w-64 lg:h-96 xl:w-72 xl:h-108 2xl:w-80 2xl:h-120 bg-gray-600 rounded-2xl lg:rounded-3xl xl:rounded-4xl flex items-center justify-center ${
               isInitialLoad
                 ? `transform transition-all duration-1200 ease-out ${
                     isLoaded ? "scale-100 opacity-100" : "scale-75 opacity-0"
@@ -64,7 +64,7 @@ const BannerPoster: React.FC<BannerPosterProps> = ({
                 : "opacity-100"
             }`}
           >
-            <span className="text-gray-300 text-xs sm:text-sm">No Image</span>
+            <span className="text-gray-300 text-sm">No Image</span>
           </div>
         )}
       </div>

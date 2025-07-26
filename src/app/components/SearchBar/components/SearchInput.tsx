@@ -18,10 +18,9 @@ const SearchInput: React.FC<SearchInputProps> = ({
   onInputChange,
   onFocus,
   onBlur,
-  onClear,
 }) => {
   return (
-    <div className="relative flex items-center w-full max-w-2xl mx-auto">
+    <div className="relative flex items-center w-full  mx-auto">
       <div
         className={`relative flex items-center bg-black backdrop-blur-sm rounded-full  transition-all duration-300 w-full ${
           isFocused
@@ -36,23 +35,12 @@ const SearchInput: React.FC<SearchInputProps> = ({
           onFocus={onFocus}
           onBlur={onBlur}
           placeholder="Enter keyword"
-          className="w-full pl-6 pr-32 py-4 bg-transparent text-white placeholder-gray-400 focus:outline-none text-base font-medium"
+          className="w-full pl-7 pr-28 py-2 bg-transparent text-white placeholder-gray-500 focus:outline-none text-semibold font-medium"
         />
-
-        {/* Clear Button */}
-        {query && (
-          <button
-            type="button"
-            onClick={onClear}
-            className="absolute right-24 px-2 py-1 text-gray-400 hover:text-red-400 transition-colors duration-200 font-bold text-lg"
-          >
-            ✕
-          </button>
-        )}
 
         <button
           type="submit"
-          className="absolute right-2 px-6 py-2.5 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-full hover:from-red-700 hover:to-red-800 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500/50 font-semibold text-sm shadow-lg"
+          className="absolute right-2 px-7 py-[4px] bg-red-600 hover:bg-red-600 text-white  rounded-full transition-all duration-300 font-semibold text-lg shadow-[0_0_7px_8px_rgba(255,0,0,0.4)] hover:shadow-[0_0_12px_14px_rgba(255,0,0,0.5)] transform hover:scale-105 focus:outline-none"
         >
           Search
         </button>

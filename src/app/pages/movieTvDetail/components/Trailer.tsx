@@ -33,17 +33,17 @@ const TrailerList: React.FC = () => {
   const videos = data?.videos?.results || [];
 
   const videoTypes = [
-    { type: "Trailer", title: "Official Movie Trailer" },
-    { type: "Teaser", title: "Exclusive Teaser Preview" },
-    { type: "Clip", title: "Featured Movie Clips" },
-    { type: "Behind The Scenes", title: "Behind The Scenes Content" },
-    { type: "Featurette", title: "Special Documentary Featurette" },
-    { type: "Music Video", title: "Official Music Videos" },
+    "Music Video",
+    "Trailer",
+    "Teaser",
+    "Clip",
+    "Behind The Scenes",
+    "Featurette",
   ];
 
   return (
-    <div className="mt-6 space-y-12 bg-[#0f0f0f] pb-16">
-      {videoTypes.map(({ type, title }) => {
+    <div className="space-y-8 md:space-y-12 lg:space-y-16 bg-[#0f0f0f] px-4 md:px-8 lg:px-12 xl:px-20">
+      {videoTypes.map((type) => {
         const video = videos.find((v: any) => v.type === type);
 
         if (!video) {
@@ -51,35 +51,23 @@ const TrailerList: React.FC = () => {
         }
 
         return (
-          <div key={type} className="mb-16">
-            <div className="mb-8">
-              <h2 className="text-3xl lg:text-4xl text-white font-bold mb-2 text-center">
-                {title}
+          <div key={type} className="mb-8 md:mb-12 lg:mb-20">
+            <div className="mb-4 md:mb-6 px-2 md:px-4">
+              <h2 className="text-lg md:text-xl lg:text-2xl text-white font-bold text-left">
+                {video.name}
               </h2>
-              <div className="w-32 h-1 bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 mx-auto rounded-full"></div>
             </div>
 
-            <div className="flex justify-center px-4">
-              <div className="w-full max-w-5xl">
-                <div className="relative group cursor-pointer">
-                  <div className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-3xl overflow-hidden shadow-2xl hover:shadow-purple-500/20 transition-all duration-500 transform group-hover:scale-[1.02] border border-gray-700">
-                    <div
-                      className="relative w-full"
-                      style={{ paddingTop: "56.25%" }}
-                    >
-                      <iframe
-                        src={`https://www.youtube.com/embed/${video.key}?rel=0&modestbranding=1&showinfo=0`}
-                        title={video.name}
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        className="absolute top-0 left-0 w-full h-full rounded-3xl"
-                      ></iframe>
-                    </div>
-
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none rounded-3xl"></div>
-                  </div>
-                </div>
+            <div className="w-full">
+              <div className="relative">
+                <iframe
+                  src={`https://www.youtube.com/embed/${video.key}?rel=0&modestbranding=1&showinfo=0`}
+                  title={video.name}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="w-full h-[500px] sm:h-[500px] md:h-[500px] lg:h-[800px] xl:h-[800px] rounded-lg"
+                ></iframe>
               </div>
             </div>
           </div>

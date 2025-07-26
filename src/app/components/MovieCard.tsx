@@ -47,15 +47,15 @@ const MovieCard = ({
             src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
             alt={isMovie ? (item as Movie).title : (item as TVSeries).name}
             fill
-            className="object-cover group-hover:scale-110 transition-transform duration-500"
+            className="object-cover  transition-transform duration-500"
             loading="lazy"
             sizes="(max-width: 768px) 100vw, 33vw"
             style={{ borderRadius: "1.5rem" }}
           />
 
-          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-          <button className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-6 py-3 bg-red-600 hover:bg-red-700 rounded-lg shadow-lg z-10 text-white text-lg font-bold scale-50 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100 hover:shadow-red-500/70 hover:scale-110">
+          <button className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-8 py-3 bg-red-600 hover:bg-red-600 rounded-3xl z-10 text-white text-lg font-bold scale-50 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100 shadow-[0_0_6px_7px_rgba(255,0,0,0.4)] hover:shadow-[0_0_10px_12px_rgba(255,0,0,0.5)] hover:scale-110">
             ▶
           </button>
         </div>

@@ -28,9 +28,13 @@ const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
             background: movie.backdrop_path
               ? `#0f0f0f url(https://image.tmdb.org/t/p/original${movie.backdrop_path}) no-repeat center`
               : "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-            backgroundSize: "100% auto",
+            backgroundSize:
+              window.innerWidth >= 576 && window.innerWidth <= 768
+                ? "100% auto"
+                : "cover",
+            backgroundPosition: "center center",
             width: "100%",
-            height: "95%",
+            height: "100%",
           }}
         />
 
@@ -55,11 +59,11 @@ const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
         />
       </div>
 
-      <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between px-8 py-30 text-white w-full h-full">
-        <div className="w-full lg:w-1/3 mt-6 lg:mt-0 flex justify-center mr-10">
+      <div className="relative z-10 flex flex-col md:flex-row items-start justify-start px-4 md:px-8 lg:px-6 pt-10 md:pt-30 text-white w-full h-full">
+        <div className="w-full md:w-1/3 mt-6 lg:mt-5 hidden md:flex justify-center lg:justify-start mb-6 md:mb-0 md:mr-6 lg:mr-2 lg:ml-12">
           {movie.poster_path ? (
             <Image
-              className="rounded-4xl shadow-lg max-h-150 object-cover"
+              className="rounded-4xl shadow-lg object-cover w-64 h-96 lg:w-90 lg:h-130"
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt={isMovie ? movie.title : movie.name}
               width={400}
@@ -67,51 +71,55 @@ const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
               priority
             />
           ) : (
-            <div className="w-64 h-80 bg-gray-600 rounded-md flex items-center justify-center">
+            <div className="w-64 h-96 lg:w-80 lg:h-120 bg-gray-600 rounded-md flex items-center justify-center">
               <span className="text-gray-300">No Image</span>
             </div>
           )}
         </div>
 
-        <div className="w-full lg:w-2/3 text-center lg:text-left">
-          <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-6 leading-tight">
+        <div className="w-full md:w-2/3 lg:w-full text-left md:mt-8 lg:mt-2 lg:ml-7">
+          <h1 className="text-3xl md:text-4xl lg:text-7xl font-extrabold text-white mb-6 leading-tight">
             {isMovie ? movie.title : movie.name}
           </h1>
 
-          <div className="text-lg md:text-xl text-gray-200 mb-4 max-w-3xl mx-auto lg:mx-0 opacity-90 leading-relaxed ">
+          <div className="text-base md:text-lg lg:text-xl text-gray-200 mb-8 max-w-3xl opacity-90 leading-relaxed">
             {movie.genres.length > 0 ? (
               movie.genres.map((genre, index) => (
                 <span
                   key={index}
-                  className="inline-block bg-gray-600 text-white border-2 rounded-full px-4 py-2 mr-2 mb-2 text-sm"
+                  className="inline-block bg-[#0f0f0f] text-white border-2 rounded-full px-4 py-1 mr-2 mb-2 text-sm"
                 >
                   {genre.name}
                 </span>
               ))
             ) : (
-              <span className="inline-block bg-gray-600 text-white border-2 rounded-full px-4 py-2 text-sm">
+              <span className="inline-block bg-[#0f0f0f] text-white border-2 rounded-full px-4 py-2 text-sm">
                 No genres available
               </span>
             )}
           </div>
 
-          <p className="text-lg md:text-sm text-white mb-8 max-w-3xl mx-auto lg:mx-0  leading-relaxed">
+          <p className="text-sm md:text-base lg:text-lg text-white mb-8 max-w-3xl leading-relaxed">
             {movie.overview || "No description available"}
           </p>
 
-          <div className="mt-6">
-            <h3 className="text-xl text-white font-semibold">Cast</h3>
-            <div className="flex space-x-4 mt-2">
+          <div className="mt-2">
+            <h3 className="text-lg md:text-xl text-white font-semibold mb-2 md:mb-4">
+              Casts
+            </h3>
+            <div className="flex flex-wrap gap-1 md:gap-2">
               {movie.credits.cast?.slice(0, 5).map((actor) => (
-                <div key={actor.id} className="text-center">
+                <div key={actor.id} className="w-24 md:w-28 mb-2 md:mb-4">
                   <Image
                     src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`}
                     alt={actor.name}
-                    className="w-32 h-48 object-cover rounded-lg"
-                    width={128}
-                    height={192}
+                    className="w-full h-32 md:h-37 mb-1 object-cover rounded-2xl"
+                    width={112}
+                    height={148}
                   />
-                  <p className="text-white text-sm mt-2">{actor.name}</p>
+                  <p className="text-white text-xs md:text-sm mt-1 md:mt-2 break-words text-left">
+                    {actor.name}
+                  </p>
                 </div>
               ))}
             </div>

@@ -22,7 +22,7 @@ const NoMoreResults = ({
           {emoji} All {text} loaded
         </p>
         <p className="text-gray-500 text-sm mt-1">
-          You've reached the end of the list
+          You&apos;ve reached the end of the list
         </p>
       </div>
     </div>

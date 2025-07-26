@@ -1,16 +1,10 @@
 "use client";
-import React, { useState } from "react";
-import { useScrolled } from "./hooks/useScrolled";
+import BottomNav from "./components/BottomNav";
 import DesktopNav from "./components/DesktopNav";
-import HamburgerButton from "./components/HamburgerButton";
-import MobileMenu from "./components/MobileMenu";
+import { useScrolled } from "./hooks/useScrolled";
 
 const Navbar = () => {
   const scrolled = useScrolled(200);
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  const toggleMenu = () => setMenuOpen(!menuOpen);
-  const closeMenu = () => setMenuOpen(false);
 
   return (
     <>
@@ -24,23 +18,10 @@ const Navbar = () => {
               : "bg-transparent pt-6 sm:pt-8 md:pt-10 opacity-80"
           }`}
       >
-        <div className="lg:hidden flex justify-start items-center">
-          <HamburgerButton isOpen={menuOpen} onClick={toggleMenu} />
-        </div>
-
-        <div className="hidden lg:flex justify-between items-center w-full">
-          <div className="flex gap-3 items-center">
-            <img src="/img/logo.png" alt="icon" className="h-14 w-14" />
-            <h1 className="text-white font-semibold text-2xl md:text-4xl group-hover:text-red-main group-hover:transition-custom">
-              TheMovies
-            </h1>
-          </div>
-
-          <DesktopNav />
-        </div>
+        <DesktopNav />
       </nav>
 
-      <MobileMenu isOpen={menuOpen} onClose={closeMenu} />
+      <BottomNav />
     </>
   );
 };

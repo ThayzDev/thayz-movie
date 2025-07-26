@@ -66,7 +66,7 @@ const HomePage = () => {
       <div className="overflow-x-hidden">
         <BannerSlice movies={trendingMovies.slice(0, 5)} />
 
-        <div className="container mx-auto px-2 2xl:px-15 space-y-12 sm:space-y-16 pb-16 mt-8 sm:mt-12 lg:mt-15">
+        <div className="container mx-auto px-2 2xl:px-7 space-y-12 sm:space-y-16 pb-16 mt-8 sm:mt-12 lg:mt-10">
           <TrendingMoviesSection
             movies={trendingMovies}
             sliceLimit={sliceLimit}

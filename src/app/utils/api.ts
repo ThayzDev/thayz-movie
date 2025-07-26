@@ -22,7 +22,7 @@ export const fetchMovies = async (
 ) => {
   try {
     let endpoint = `movie/${category}`;
-    let params: any = { page };
+    const params: Record<string, unknown> = { page };
 
     // Xử lý các category khác nhau
     switch (category) {
@@ -73,7 +73,7 @@ export const fetchTVSeries = async (
 ) => {
   try {
     let endpoint = `tv/${category}`;
-    let params: any = { page };
+    const params: Record<string, unknown> = { page };
 
     switch (category) {
       case "trending":
@@ -170,7 +170,9 @@ export const fetchTrendingBackdrop = async (type: "movie" | "tv" = "movie") => {
     });
 
     const itemsWithBackdrop =
-      data.results?.filter((item: any) => item.backdrop_path) || [];
+      data.results?.filter(
+        (item: Record<string, unknown>) => item.backdrop_path
+      ) || [];
 
     if (itemsWithBackdrop.length > 0) {
       const randomIndex = Math.floor(Math.random() * itemsWithBackdrop.length);

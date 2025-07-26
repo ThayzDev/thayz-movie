@@ -7,20 +7,31 @@ const DesktopNav = () => {
   const { isActive } = useNavActive();
 
   return (
-    <div className="hidden lg:flex space-x-8 text-2xl font-semibold">
-      {NAV_ITEMS.map((item) => (
-        <NavLink
-          key={item.to}
-          to={item.to}
-          className={
-            isActive(item.to)
-              ? "text-white font-semibold border-b-2 border-red-600"
-              : "relative hover:text-red-600 hover:font-medium duration-200 after:absolute after:left-1/2 after:bottom-0 after:w-0 after:h-0.5 after:bg-red-600 after:transition-all after:duration-300 hover:after:w-full hover:after:left-0 after:rounded-full"
-          }
-        >
-          {item.label}
-        </NavLink>
-      ))}
+    <div className="hidden md:flex justify-between items-center w-full">
+      {/* Logo and Brand Name */}
+      <div className="flex gap-3 items-center">
+        <img src="/img/logo.png" alt="icon" className="h-14 w-14" />
+        <h1 className="text-white font-semibold text-2xl lg:text-4xl">
+          TheMovies
+        </h1>
+      </div>
+
+      {/* Navigation Links */}
+      <div className="flex space-x-8 text-2xl font-semibold">
+        {NAV_ITEMS.map((item) => (
+          <NavLink
+            key={item.to}
+            to={item.to}
+            className={
+              isActive(item.to)
+                ? "text-white font-semibold border-b-2 border-red-600"
+                : "relative hover:text-red-600 hover:font-medium duration-200 after:absolute after:left-1/2 after:bottom-0 after:w-0 after:h-0.5 after:bg-red-600 after:transition-all after:duration-300 hover:after:w-full hover:after:left-0 after:rounded-full"
+            }
+          >
+            {item.label}
+          </NavLink>
+        ))}
+      </div>
     </div>
   );
 };
