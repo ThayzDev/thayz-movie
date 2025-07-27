@@ -13,13 +13,13 @@ const StatusMessage: React.FC<StatusMessageProps> = ({
   loading,
   error,
   notFound,
-  loadingText = "Loading amazing content...",
+  loadingText = "Loading...",
   errorText = "Failed to load content",
   notFoundText = "No movies found",
 }) => {
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-black via-red-950 to-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
         <div className="text-center">
           <div className="relative">
             <div className="w-16 h-16 border-4 border-red-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
@@ -33,7 +33,7 @@ const StatusMessage: React.FC<StatusMessageProps> = ({
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-red-900 via-black to-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-red-900 flex items-center justify-center">
         <div className="text-center p-8 bg-black/70 backdrop-blur-md rounded-xl border border-red-500/50">
           <div className="text-red-400 text-6xl mb-4">⚠️</div>
           <h2 className="text-red-400 text-2xl font-bold mb-2">
@@ -49,7 +49,7 @@ const StatusMessage: React.FC<StatusMessageProps> = ({
 
   if (notFound) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-800 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-800 flex items-center justify-center">
         <div className="text-center p-8 bg-black/70 backdrop-blur-md rounded-xl border border-gray-500/50">
           <div className="text-6xl mb-4 text-gray-400">🎬</div>
           <h2 className="text-xl font-semibold text-gray-300 mb-2">

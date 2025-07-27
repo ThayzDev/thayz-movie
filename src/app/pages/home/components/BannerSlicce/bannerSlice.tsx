@@ -1,6 +1,6 @@
 "use client";
 import { Movie } from "@/app/types/movie";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import type { Swiper as SwiperClass } from "swiper";
 import "swiper/css";
 import { Autoplay } from "swiper/modules";
@@ -9,22 +9,12 @@ import BannerSlide from "./components/Slice";
 
 interface BannerProps {
   movies: Movie[];
+  onOpenTrailer: (movieId: number, type: "movie" | "tv") => void;
 }
 
-const BannerSlice: React.FC<BannerProps> = ({ movies }) => {
-  const [isTrailerOpen, setIsTrailerOpen] = useState(false);
+const BannerSlice: React.FC<BannerProps> = ({ movies, onOpenTrailer }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const swiperRef = useRef<SwiperClass | null>(null);
-
-  useEffect(() => {
-    if (swiperRef.current) {
-      if (isTrailerOpen) {
-        // Không cần stop autoplay vì đã tắt
-      } else {
-        // Không cần start autoplay vì đã tắt
-      }
-    }
-  }, [isTrailerOpen]);
 
   if (!movies || movies.length === 0) {
     return (
@@ -40,7 +30,6 @@ const BannerSlice: React.FC<BannerProps> = ({ movies }) => {
     speed: 1000,
     // autoplay: { delay: 4000, disableOnInteraction: false }, // Tắt autoplay
     onSlideChange: (swiper: SwiperClass) => {
-      setIsTrailerOpen(false);
       setCurrentSlide(swiper.realIndex);
     },
     breakpoints: {
@@ -61,7 +50,7 @@ const BannerSlice: React.FC<BannerProps> = ({ movies }) => {
           <SwiperSlide key={`${movie.id}-${currentSlide}`}>
             <BannerSlide
               movie={movie}
-              setIsTrailerOpen={setIsTrailerOpen}
+              onOpenTrailer={onOpenTrailer}
               isInitialLoad={currentSlide === 0 && index === 0} // Chỉ slide đầu tiên là initial load
               currentSlide={currentSlide}
               slideIndex={index}

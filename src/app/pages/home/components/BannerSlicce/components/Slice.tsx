@@ -3,11 +3,10 @@ import { Movie } from "@/app/types/movie";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BannerPoster from "./BannerPoster";
-import TrailerModal from "./TrailerModal";
 
 interface BannerSlideProps {
   movie: Movie;
-  setIsTrailerOpen: (open: boolean) => void;
+  onOpenTrailer: (movieId: number, type: "movie" | "tv") => void;
   isInitialLoad?: boolean; // Thêm prop để biết có phải lần đầu load không
   currentSlide?: number; // Thêm prop để theo dõi slide hiện tại
   slideIndex?: number; // Thêm prop để biết index của slide này
@@ -15,31 +14,27 @@ interface BannerSlideProps {
 
 const BannerSlide: React.FC<BannerSlideProps> = ({
   movie,
-  setIsTrailerOpen,
+  onOpenTrailer,
   isInitialLoad = false,
   currentSlide = 0,
   slideIndex = 0,
 }) => {
   const navigate = useNavigate();
-  const [showTrailer, setShowTrailer] = useState(false);
   const [posterDone, setPosterDone] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Reset animation khi slide thay đổi
     setIsVisible(false);
     setPosterDone(false);
 
-    // Delay để tạo hiệu ứng ẩn trước, sau đó animation xuống
     const hideTimer = setTimeout(() => {
       if (currentSlide === slideIndex) {
-        // Chỉ animation nếu đây là slide active
         setIsVisible(true);
       }
-    }, 200); // Tăng delay để rõ ràng hơn
+    }, 200);
 
     return () => clearTimeout(hideTimer);
-  }, [currentSlide, slideIndex]); // Chạy lại khi currentSlide hoặc slideIndex thay đổi
+  }, [currentSlide, slideIndex]);
 
   const handleWatchNow = () => {
     const type = movie.title ? "movie" : "tv";
@@ -47,13 +42,8 @@ const BannerSlide: React.FC<BannerSlideProps> = ({
   };
 
   const handleWatchTrailer = () => {
-    setShowTrailer(true);
-    setIsTrailerOpen(true);
-  };
-
-  const handleCloseTrailer = () => {
-    setShowTrailer(false);
-    setIsTrailerOpen(false);
+    const type = movie.title ? "movie" : "tv";
+    onOpenTrailer(movie.id, type);
   };
 
   return (
@@ -73,11 +63,14 @@ const BannerSlide: React.FC<BannerSlideProps> = ({
       <div className="relative h-full px-4 md:px-8 lg:px-12 py-8 md:py-16 lg:py-32 flex">
         <div className="w-full lg:w-full space-y-10 md:space-y-10 lg:space-y-10 text-left flex flex-col justify-center h-full pl-2 md:pl-8 lg:pl-12 xl:pl-8">
           <h1
-            className={`text-4xl md:text-5xl lg:text-5xl xl:text-5xl 2xl:text-8xl font-extrabold text-white leading-tight transform transition-all duration-1000 ease-out ${
+            className={`text-4xl md:text-5xl lg:text-8xl xl:text-8xl 2xl:text-8xl font-extrabold text-white leading-none transform transition-all duration-1000 ease-out ${
               isVisible
                 ? "translate-y-0 opacity-100"
                 : "-translate-y-10 opacity-0"
-            }`}
+            } lg:max-w-[77%] xl:max-w-[80%] 2xl:max-w-[80%]`}
+            style={{
+              wordBreak: "break-word",
+            }}
           >
             {movie.title}
           </h1>
@@ -125,14 +118,6 @@ const BannerSlide: React.FC<BannerSlideProps> = ({
           />
         </div>
       </div>
-
-      {showTrailer && (
-        <TrailerModal
-          movieId={movie.id}
-          type={movie.title ? "movie" : "tv"}
-          onClose={handleCloseTrailer}
-        />
-      )}
     </div>
   );
 };

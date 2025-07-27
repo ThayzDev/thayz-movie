@@ -1,0 +1,13 @@
+.detailBannerBg {
+  width: 100%;
+  height: 100%;
+  background-size: cover !important;
+  background-position: center 10% !important;
+}
+
+@media (max-width: 576px) {
+  .detailBannerBg {
+    background-size: 250% !important;
+    background-position: center top !important;
+  }
+}

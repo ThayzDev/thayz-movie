@@ -10,7 +10,6 @@ const ShowMoreButton = ({
   onLoadMore,
   isFetching,
   canShowMore,
-  increment = 25,
 }: ShowMoreButtonProps) => {
   if (!canShowMore) return null;
 

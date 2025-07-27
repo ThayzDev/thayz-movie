@@ -4,7 +4,7 @@ const Footer = () => {
       <div
         className="absolute inset-0 bg-cover bg-center md:bg-top bg-no-repeat"
         style={{
-          backgroundImage: `url('./img/footer-bg.jpg')`,
+          backgroundImage: `url('/img/footer-bg.jpg')`,
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80 md:from-black/40 md:via-black/20 md:to-black/60"></div>
@@ -23,7 +23,6 @@ const Footer = () => {
         </div>
 
         <div className="flex justify-center">
-          {/* Desktop Layout - 3 columns */}
           <div className="hidden lg:grid lg:grid-cols-3 gap-30 text-center text-2xl font-bold max-w-4xl w-full">
             <ul className="space-y-5">
               <li>
@@ -123,9 +122,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Mobile & Tablet Layout - rows of 3 items */}
           <div className="lg:hidden w-full max-w-2xl space-y-4">
-            {/* Row 1 */}
             <div className="grid grid-cols-3 gap-4 md:gap-8 text-center text-sm md:text-base font-bold">
               <a
                 href="#"
@@ -147,7 +144,6 @@ const Footer = () => {
               </a>
             </div>
 
-            {/* Row 2 */}
             <div className="grid grid-cols-3 gap-4 md:gap-8 text-center text-sm md:text-base font-bold">
               <a
                 href="#"
@@ -169,7 +165,6 @@ const Footer = () => {
               </a>
             </div>
 
-            {/* Row 3 */}
             <div className="grid grid-cols-3 gap-4 md:gap-8 text-center text-sm md:text-base font-bold">
               <a
                 href="#"
@@ -191,7 +186,6 @@ const Footer = () => {
               </a>
             </div>
 
-            {/* Row 4 - remaining items centered */}
             <div className="flex justify-center">
               <div className="grid grid-cols-2 gap-8 md:gap-12 text-center text-sm md:text-base font-bold">
                 <a

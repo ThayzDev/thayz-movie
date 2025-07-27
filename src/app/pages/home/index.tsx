@@ -2,6 +2,8 @@
 
 import StatusMessage from "@/app/components/StatusMessage";
 import BannerSlice from "@/app/pages/home/components/BannerSlicce/bannerSlice";
+import TrailerModal from "@/app/pages/home/components/BannerSlicce/components/TrailerModal/TrailerModal";
+import { useState } from "react";
 import {
   TopRatedMoviesSection,
   TopRatedTVSection,
@@ -12,6 +14,10 @@ import { useHomeData } from "./hooks/useHomeData";
 import { useHomeSliderHandlers } from "./hooks/useHomeSliderHandlers";
 
 const HomePage = () => {
+  const [showTrailer, setShowTrailer] = useState(false);
+  const [trailerMovieId, setTrailerMovieId] = useState<number>(0);
+  const [trailerType, setTrailerType] = useState<"movie" | "tv">("movie");
+
   const {
     trendingMovies,
     isLoadingMovies,
@@ -26,6 +32,16 @@ const HomePage = () => {
     isLoadingTopRatedTV,
     errorTopRatedTV,
   } = useHomeData("");
+
+  const handleOpenTrailer = (movieId: number, type: "movie" | "tv") => {
+    setTrailerMovieId(movieId);
+    setTrailerType(type);
+    setShowTrailer(true);
+  };
+
+  const handleCloseTrailer = () => {
+    setShowTrailer(false);
+  };
 
   const getSliceLimit = () => {
     if (typeof window !== "undefined") {
@@ -64,9 +80,12 @@ const HomePage = () => {
   return (
     <div className="min-h-screen">
       <div className="overflow-x-hidden">
-        <BannerSlice movies={trendingMovies.slice(0, 5)} />
+        <BannerSlice
+          movies={trendingMovies.slice(0, 5)}
+          onOpenTrailer={handleOpenTrailer}
+        />
 
-        <div className="container mx-auto px-2 2xl:px-7 space-y-12 sm:space-y-16 pb-16 mt-8 sm:mt-12 lg:mt-10">
+        <div className="w-full space-y-12 pb-16 mt-8 sm:mt-12 lg:mt-10 px-2 sm:px-4 md:px-6 lg:px-10">
           <TrendingMoviesSection
             movies={trendingMovies}
             sliceLimit={sliceLimit}
@@ -92,6 +111,14 @@ const HomePage = () => {
           />
         </div>
       </div>
+
+      {showTrailer && (
+        <TrailerModal
+          movieId={trailerMovieId}
+          type={trailerType}
+          onClose={handleCloseTrailer}
+        />
+      )}
     </div>
   );
 };
