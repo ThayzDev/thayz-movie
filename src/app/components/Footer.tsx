@@ -17,13 +17,14 @@ const Footer = () => {
               <div className="w-0 h-0 border-l-[6px] md:border-l-[8px] border-l-white border-t-[4px] md:border-t-[6px] border-t-transparent border-b-[4px] md:border-b-[6px] border-b-transparent ml-1"></div>
             </div>
             <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-white">
-              Thay Movie
+              theMovies
             </h1>
           </div>
         </div>
 
         <div className="flex justify-center">
-          <div className="hidden lg:grid lg:grid-cols-3 gap-30 text-center text-2xl font-bold max-w-4xl w-full">
+          {/* Desktop/Tablet - 3 columns */}
+          <div className="hidden md:grid md:grid-cols-3 gap-30 text-center text-2xl font-bold max-w-4xl w-full">
             <ul className="space-y-5">
               <li>
                 <a
@@ -122,77 +123,81 @@ const Footer = () => {
             </ul>
           </div>
 
-          <div className="lg:hidden w-full max-w-2xl space-y-4">
-            <div className="grid grid-cols-3 gap-4 md:gap-8 text-center text-sm md:text-base font-bold">
-              <a
-                href="#"
-                className="text-gray-300 hover:text-red-600 transition-colors duration-200"
-              >
-                Home
-              </a>
-              <a
-                href="#"
-                className="text-gray-300 hover:text-red-600 transition-colors duration-200"
-              >
-                Contact us
-              </a>
-              <a
-                href="#"
-                className="text-gray-300 hover:text-red-600 transition-colors duration-200"
-              >
-                About us
-              </a>
+          {/* Mobile - 2 rows */}
+          <div className="md:hidden w-full max-w-2xl space-y-6">
+            {/* Row 1: Mục 1 + Mục 2 gộp lại */}
+            <div className="grid grid-cols-2 gap-6 text-center text-sm font-bold">
+              {/* Mục 1 */}
+              <div className="space-y-3">
+                <a
+                  href="#"
+                  className="block text-gray-300 hover:text-red-600 transition-colors duration-200"
+                >
+                  Home
+                </a>
+                <a
+                  href="#"
+                  className="block text-gray-300 hover:text-red-600 transition-colors duration-200"
+                >
+                  Contact us
+                </a>
+                <a
+                  href="#"
+                  className="block text-gray-300 hover:text-red-600 transition-colors duration-200"
+                >
+                  Term of services
+                </a>
+                <a
+                  href="#"
+                  className="block text-gray-300 hover:text-red-600 transition-colors duration-200"
+                >
+                  About us
+                </a>
+              </div>
+
+              {/* Mục 2 */}
+              <div className="space-y-3">
+                <a
+                  href="#"
+                  className="block text-gray-300 hover:text-red-600 transition-colors duration-200"
+                >
+                  Live
+                </a>
+                <a
+                  href="#"
+                  className="block text-gray-300 hover:text-red-600 transition-colors duration-200"
+                >
+                  FAQ
+                </a>
+                <a
+                  href="#"
+                  className="block text-gray-300 hover:text-red-600 transition-colors duration-200"
+                >
+                  Premium
+                </a>
+              </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-4 md:gap-8 text-center text-sm md:text-base font-bold">
-              <a
-                href="#"
-                className="text-gray-300 hover:text-red-600 transition-colors duration-200"
-              >
-                Live
-              </a>
-              <a
-                href="#"
-                className="text-gray-300 hover:text-red-600 transition-colors duration-200"
-              >
-                FAQ
-              </a>
-              <a
-                href="#"
-                className="text-gray-300 hover:text-red-600 transition-colors duration-200"
-              >
-                Premium
-              </a>
-            </div>
-
-            <div className="grid grid-cols-3 gap-4 md:gap-8 text-center text-sm md:text-base font-bold">
-              <a
-                href="#"
-                className="text-gray-300 hover:text-red-600 transition-colors duration-200"
-              >
-                You must watch
-              </a>
-              <a
-                href="#"
-                className="text-gray-300 hover:text-red-600 transition-colors duration-200"
-              >
-                Recent release
-              </a>
-              <a
-                href="#"
-                className="text-gray-300 hover:text-red-600 transition-colors duration-200"
-              >
-                Top IMDB
-              </a>
-            </div>
-
-            <div className="flex justify-center">
-              <div className="grid grid-cols-2 gap-8 md:gap-12 text-center text-sm md:text-base font-bold">
+            {/* Row 2: Mục 3 */}
+            <div className="text-center">
+              <div className="grid grid-cols-2 gap-6 text-sm font-bold">
                 <a
                   href="#"
                   className="text-gray-300 hover:text-red-600 transition-colors duration-200"
                 >
-                  Term of services
+                  You must watch
+                </a>
+                <a
+                  href="#"
+                  className="text-gray-300 hover:text-red-600 transition-colors duration-200"
+                >
+                  Recent release
+                </a>
+                <a
+                  href="#"
+                  className="text-gray-300 hover:text-red-600 transition-colors duration-200"
+                >
+                  Top IMDB
                 </a>
                 <a
                   href="#"
