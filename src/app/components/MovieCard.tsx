@@ -41,14 +41,10 @@ const MovieCard = ({
             />
           ) : (
             <div
-              className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 flex flex-col items-center justify-center text-gray-400"
+              className="w-full h-full bg-black flex flex-col items-center justify-center text-gray-400"
               style={{ borderRadius: "1.5rem" }}
             >
-              <div className="text-4xl mb-2">🎬</div>
-              <div className="text-sm text-center px-2 font-medium">
-                {isMovie ? (item as Movie).title : (item as TVSeries).name}
-              </div>
-              <div className="text-xs mt-1 opacity-60">No Image</div>
+              <div className="text-xl mt-1 opacity-60">No Image</div>
             </div>
           )}
 

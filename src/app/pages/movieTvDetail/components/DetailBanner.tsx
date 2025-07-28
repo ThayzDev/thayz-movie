@@ -70,7 +70,6 @@ const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
         />
       </div>
 
-      {/* Content Section - Bottom 50% */}
       <div className="absolute bottom-0 left-0 w-full h-1/2 bg-[#0f0f0f]"></div>
 
       <div className="relative z-10 flex flex-col md:flex-row items-start justify-start px-4 md:px-8 lg:px-6 pt-10 md:pt-30 text-white w-full h-full">
@@ -86,10 +85,9 @@ const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
               onError={() => setPosterError(true)}
             />
           ) : (
-            <div className="w-64 h-96 lg:w-80 lg:h-120 bg-[#0f0f0f] rounded-md flex items-center justify-center">
+            <div className="w-64 h-96 lg:w-80 lg:h-120 bg-black rounded-md flex items-center justify-center">
               <div className="text-center">
-                <div className="text-gray-400 text-2xl mb-2">🎬</div>
-                <span className="text-gray-300 text-sm">No poster image</span>
+                <span className="text-gray-300 text-xl">No poster image</span>
               </div>
             </div>
           )}
@@ -152,9 +150,8 @@ const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
                       }
                     />
                   ) : (
-                    <div className="w-[100px] h-[150px] bg-[#0f0f0f] rounded-lg flex items-center justify-center">
+                    <div className="w-[100px] h-[150px] bg-black rounded-lg flex items-center justify-center">
                       <div className="text-center">
-                        <div className="text-gray-400 text-lg">🎬</div>
                         <span className="text-gray-300 text-xs">No image</span>
                       </div>
                     </div>
