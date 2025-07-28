@@ -103,21 +103,6 @@ const TVSeriesPage = () => {
             handleCardClick={handleCardClick}
           />
 
-          {/* Loading khi fetch thêm data */}
-          {isFetching && displayedTVSeries.length > 0 && (
-            <div className="flex justify-center py-8">
-              <div className="text-center">
-                <div className="relative">
-                  <div className="w-12 h-12 border-4 border-red-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                  <div className="w-8 h-8 border-4 border-red-700 border-t-transparent rounded-full animate-spin absolute top-2 left-1/2 transform -translate-x-1/2"></div>
-                </div>
-                <p className="text-white text-sm font-semibold">
-                  Loading more TV series...
-                </p>
-              </div>
-            </div>
-          )}
-
           {canShowMore && (
             <ShowMoreButton
               onLoadMore={handleLoadMore}
