@@ -33,14 +33,23 @@ const MoviesPage = () => {
     refetchOnReconnect: false,
     enabled: true,
     placeholderData: (previousData) => previousData,
+    gcTime: 10 * 60 * 1000, // Giữ cache 10 phút
   });
 
+  // Effect riêng để reset khi search query thay đổi
   useEffect(() => {
-    if (movies && movies.length > 0) {
+    if (currentPage === 1) {
+      setAllMovies([]);
+    }
+  }, [searchQuery, searchCategory]);
+
+  useEffect(() => {
+    if (movies !== undefined) {
       if (currentPage === 1) {
+        // Luôn set lại allMovies khi currentPage = 1 (search mới hoặc reset)
         setAllMovies(movies);
         setDisplayCount(25);
-      } else {
+      } else if (movies.length > 0) {
         setAllMovies((prev) => {
           const existingIds = new Set(prev.map((movie: Movie) => movie.id));
           const newMovies = movies.filter(
@@ -50,7 +59,7 @@ const MoviesPage = () => {
         });
       }
     }
-  }, [movies, currentPage]);
+  }, [movies, currentPage]); // Thêm searchQuery và searchCategory vào dependencies
 
   const { handleCardClick, handleSearch, handleInputChange, handleLoadMore } =
     useMovieHandlers(
@@ -58,7 +67,6 @@ const MoviesPage = () => {
       setSearchCategory,
       setInputValue,
       setCurrentPage,
-      setAllMovies,
       setDisplayCount,
       displayCount,
       allMovies,
@@ -75,7 +83,7 @@ const MoviesPage = () => {
     <div className="bg-[#0f0f0f] min-h-screen">
       <PageBanner title="Movies" type="movie" />
 
-      <div className="container mx-auto px-2 2xl:px-15 ">
+      <div className="w-full max-w-[1920px] mx-auto px-2 sm:px-10 md:px-10 lg:px-10 xl:px-10 2xl:px-15 ">
         <div className="movies-section mt-8">
           <div className="mb-10 flex justify-start">
             <SearchBar
@@ -86,11 +94,29 @@ const MoviesPage = () => {
             />
           </div>
           <MovieResults
-            isLoading={isLoadingMovies && currentPage === 1}
+            isLoading={
+              (isLoadingMovies && displayedMovies.length === 0) ||
+              (isFetching && displayedMovies.length === 0)
+            }
             error={errorMovies}
             movies={displayedMovies}
             handleCardClick={handleCardClick}
           />
+
+          {/* Loading khi fetch thêm data */}
+          {isFetching && displayedMovies.length > 0 && (
+            <div className="flex justify-center py-8">
+              <div className="text-center">
+                <div className="relative">
+                  <div className="w-12 h-12 border-4 border-red-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                  <div className="w-8 h-8 border-4 border-red-700 border-t-transparent rounded-full animate-spin absolute top-2 left-1/2 transform -translate-x-1/2"></div>
+                </div>
+                <p className="text-white text-sm font-semibold">
+                  Loading more movies...
+                </p>
+              </div>
+            </div>
+          )}
 
           {canShowMore && (
             <ShowMoreButton

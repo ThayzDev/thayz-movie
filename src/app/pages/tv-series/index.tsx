@@ -32,14 +32,23 @@ const TVSeriesPage = () => {
     refetchOnReconnect: false,
     enabled: true,
     placeholderData: (previousData) => previousData,
+    gcTime: 10 * 60 * 1000, // Giữ cache 10 phút
   });
 
+  // Effect riêng để reset khi search query thay đổi
   useEffect(() => {
-    if (tvSeries && tvSeries.length > 0) {
+    if (currentPage === 1) {
+      setAllTVSeries([]);
+    }
+  }, [searchQuery, searchCategory]);
+
+  useEffect(() => {
+    if (tvSeries !== undefined) {
       if (currentPage === 1) {
+        // Luôn set lại allTVSeries khi currentPage = 1 (search mới hoặc reset)
         setAllTVSeries(tvSeries);
         setDisplayCount(25);
-      } else {
+      } else if (tvSeries.length > 0) {
         setAllTVSeries((prev) => {
           const existingIds = new Set(prev.map((tv: TVSeries) => tv.id));
           const newTVSeries = tvSeries.filter(
@@ -57,7 +66,6 @@ const TVSeriesPage = () => {
       setSearchCategory,
       setInputValue,
       setCurrentPage,
-      setAllTVSeries,
       setDisplayCount,
       displayCount,
       allTVSeries,
@@ -74,7 +82,7 @@ const TVSeriesPage = () => {
     <div className="bg-[#0f0f0f] min-h-screen">
       <PageBanner title="TV Series" type="tv" />
 
-      <div className="container mx-auto px-2 2xl:px-15">
+      <div className="w-full max-w-[1920px] mx-auto px-2 sm:px-10 md:px-10 lg:px-10 xl:px-10 2xl:px-15">
         <div className="search-section mt-15">
           <SearchBar
             onSearch={handleSearch}
@@ -86,11 +94,29 @@ const TVSeriesPage = () => {
 
         <div className="tv-series-section mt-8">
           <TVSeriesResults
-            isLoading={isLoadingTV && currentPage === 1}
+            isLoading={
+              (isLoadingTV && displayedTVSeries.length === 0) ||
+              (isFetching && displayedTVSeries.length === 0)
+            }
             error={errorTV}
             tvSeries={displayedTVSeries}
             handleCardClick={handleCardClick}
           />
+
+          {/* Loading khi fetch thêm data */}
+          {isFetching && displayedTVSeries.length > 0 && (
+            <div className="flex justify-center py-8">
+              <div className="text-center">
+                <div className="relative">
+                  <div className="w-12 h-12 border-4 border-red-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                  <div className="w-8 h-8 border-4 border-red-700 border-t-transparent rounded-full animate-spin absolute top-2 left-1/2 transform -translate-x-1/2"></div>
+                </div>
+                <p className="text-white text-sm font-semibold">
+                  Loading more TV series...
+                </p>
+              </div>
+            </div>
+          )}
 
           {canShowMore && (
             <ShowMoreButton

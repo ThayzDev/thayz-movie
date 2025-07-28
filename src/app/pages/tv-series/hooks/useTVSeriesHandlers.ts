@@ -1,15 +1,12 @@
+import { TVSeries } from "@/app/types/tvSeries";
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { TVSeries } from "@/app/types/tvSeries";
 
 export function useTVSeriesHandlers(
   setSearchQuery: (q: string) => void,
   setSearchCategory: (c: string) => void,
   setInputValue: (v: string) => void,
   setCurrentPage: (page: number | ((prev: number) => number)) => void,
-  setAllTVSeries: (
-    tvSeries: TVSeries[] | ((prev: TVSeries[]) => TVSeries[])
-  ) => void,
   setDisplayCount: (count: number) => void,
   displayCount: number,
   allTVSeries: TVSeries[],
@@ -29,16 +26,10 @@ export function useTVSeriesHandlers(
       setSearchQuery(query);
       setSearchCategory(category);
       setCurrentPage(1);
-      setAllTVSeries([]);
+      // Không reset allTVSeries ở đây, để useEffect xử lý
       setDisplayCount(25);
     },
-    [
-      setSearchQuery,
-      setSearchCategory,
-      setCurrentPage,
-      setAllTVSeries,
-      setDisplayCount,
-    ]
+    [setSearchQuery, setSearchCategory, setCurrentPage, setDisplayCount]
   );
 
   const handleInputChange = useCallback(

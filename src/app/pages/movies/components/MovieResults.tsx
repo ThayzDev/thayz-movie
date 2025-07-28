@@ -32,7 +32,7 @@ const MovieResults = ({
   }
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-x-1 gap-y-15 pb-16">
+    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-6 gap-x-1 gap-y-10 pb-16">
       {movies.map((movie: Movie) => (
         <MovieCard
           key={movie.id}

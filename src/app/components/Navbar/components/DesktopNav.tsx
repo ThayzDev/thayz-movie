@@ -15,7 +15,7 @@ const DesktopNav = () => {
           to="/movies"
           className="text-white hover:text-red-600 font-semibold text-2xl lg:text-4xl transition-colors duration-200"
         >
-          TheMovies
+          theMovies
         </NavLink>
       </div>
 

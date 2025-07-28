@@ -8,7 +8,6 @@ export function useMovieHandlers(
   setSearchCategory: (c: string) => void,
   setInputValue: (v: string) => void,
   setCurrentPage: (page: number | ((prev: number) => number)) => void,
-  setAllMovies: (movies: Movie[] | ((prev: Movie[]) => Movie[])) => void,
   setDisplayCount: (count: number) => void,
   displayCount: number,
   allMovies: Movie[],
@@ -28,16 +27,9 @@ export function useMovieHandlers(
       setSearchQuery(query);
       setSearchCategory(category);
       setCurrentPage(1);
-      setAllMovies([]);
       setDisplayCount(25);
     },
-    [
-      setSearchQuery,
-      setSearchCategory,
-      setCurrentPage,
-      setAllMovies,
-      setDisplayCount,
-    ]
+    [setSearchQuery, setSearchCategory, setCurrentPage, setDisplayCount]
   );
 
   const handleInputChange = useCallback(
