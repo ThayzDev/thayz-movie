@@ -27,7 +27,7 @@ export function useMovieHandlers(
       setSearchQuery(query);
       setSearchCategory(category);
       setCurrentPage(1);
-      setDisplayCount(25);
+      setDisplayCount(20);
     },
     [setSearchQuery, setSearchCategory, setCurrentPage, setDisplayCount]
   );
@@ -40,7 +40,7 @@ export function useMovieHandlers(
   );
 
   const handleLoadMore = useCallback(() => {
-    const newDisplayCount = displayCount + 25;
+    const newDisplayCount = displayCount + 20;
 
     if (newDisplayCount > allMovies.length && movies && movies.length === 20) {
       setCurrentPage((prev) => prev + 1);

@@ -8,7 +8,7 @@ interface BannerPosterProps {
   onAnimationComplete: () => void;
   animatePoster?: boolean;
   className?: string;
-  isInitialLoad?: boolean; // Thêm prop để biết có phải lần đầu load không
+  isInitialLoad?: boolean;
 }
 
 const BannerPoster: React.FC<BannerPosterProps> = ({
@@ -21,7 +21,6 @@ const BannerPoster: React.FC<BannerPosterProps> = ({
 
   useEffect(() => {
     if (isInitialLoad) {
-      // Chỉ animation nếu là lần đầu load
       setIsLoaded(false);
       const timer = setTimeout(() => {
         setIsLoaded(true);
@@ -29,7 +28,6 @@ const BannerPoster: React.FC<BannerPosterProps> = ({
       }, 200);
       return () => clearTimeout(timer);
     } else {
-      // Không animation, hiển thị ngay lập tức
       setIsLoaded(true);
       onAnimationComplete();
     }

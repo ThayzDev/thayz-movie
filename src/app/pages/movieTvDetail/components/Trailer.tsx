@@ -33,12 +33,12 @@ const TrailerList: React.FC = () => {
   const videos = data?.videos?.results || [];
 
   const videoTypes = [
-    "Music Video",
     "Trailer",
     "Teaser",
     "Clip",
     "Behind The Scenes",
     "Featurette",
+    "Music Video",
   ];
 
   return (

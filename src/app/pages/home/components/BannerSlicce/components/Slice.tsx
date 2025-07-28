@@ -7,9 +7,9 @@ import BannerPoster from "./BannerPoster";
 interface BannerSlideProps {
   movie: Movie;
   onOpenTrailer: (movieId: number, type: "movie" | "tv") => void;
-  isInitialLoad?: boolean; // Thêm prop để biết có phải lần đầu load không
-  currentSlide?: number; // Thêm prop để theo dõi slide hiện tại
-  slideIndex?: number; // Thêm prop để biết index của slide này
+  isInitialLoad?: boolean;
+  currentSlide?: number;
+  slideIndex?: number;
 }
 
 const BannerSlide: React.FC<BannerSlideProps> = ({

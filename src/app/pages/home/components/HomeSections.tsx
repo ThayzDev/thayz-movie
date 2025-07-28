@@ -46,14 +46,12 @@ export const TrendingMoviesSection = ({
   movies,
   sliceLimit,
   onCardClick,
-  handleBeforeChange,
-  handleAfterChange,
 }: any) => (
   <section>
     <SectionHeader
       title="Trending Movies"
       showViewMore={true}
-      viewMorePath="/movies"
+      viewMorePath="/movies?type=trending"
     />
     <div className="relative">
       <MovieSlider
@@ -61,10 +59,6 @@ export const TrendingMoviesSection = ({
         isMovie={true}
         sliceLimit={sliceLimit}
         onCardClick={onCardClick}
-        settings={{
-          beforeChange: handleBeforeChange,
-          afterChange: handleAfterChange,
-        }}
       />
     </div>
   </section>
@@ -74,14 +68,12 @@ export const TopRatedMoviesSection = ({
   movies,
   sliceLimit,
   onCardClick,
-  handleBeforeChange,
-  handleAfterChange,
 }: any) => (
   <section>
     <SectionHeader
       title="Top Rated Movies"
       showViewMore={true}
-      viewMorePath="/movies"
+      viewMorePath="/movies?type=top_rated"
     />
     <div className="relative">
       <MovieSlider
@@ -89,10 +81,6 @@ export const TopRatedMoviesSection = ({
         isMovie={true}
         sliceLimit={sliceLimit}
         onCardClick={onCardClick}
-        settings={{
-          beforeChange: handleBeforeChange,
-          afterChange: handleAfterChange,
-        }}
       />
     </div>
   </section>
@@ -102,14 +90,12 @@ export const TrendingTVSection = ({
   tvSeries,
   sliceLimit,
   onCardClick,
-  handleBeforeChange,
-  handleAfterChange,
 }: any) => (
   <section>
     <SectionHeader
       title="Trending TV Series"
       showViewMore={true}
-      viewMorePath="/tv-series"
+      viewMorePath="/tv-series?type=trending"
     />
     <div className="relative">
       <MovieSlider
@@ -117,10 +103,6 @@ export const TrendingTVSection = ({
         isMovie={false}
         sliceLimit={sliceLimit}
         onCardClick={onCardClick}
-        settings={{
-          beforeChange: handleBeforeChange,
-          afterChange: handleAfterChange,
-        }}
       />
     </div>
   </section>
@@ -130,14 +112,12 @@ export const TopRatedTVSection = ({
   tvSeries,
   sliceLimit,
   onCardClick,
-  handleBeforeChange,
-  handleAfterChange,
 }: any) => (
   <section>
     <SectionHeader
       title="Top Rated TV Series"
       showViewMore={true}
-      viewMorePath="/tv-series"
+      viewMorePath="/tv-series?type=top_rated"
     />
     <div className="relative">
       <MovieSlider
@@ -145,10 +125,6 @@ export const TopRatedTVSection = ({
         isMovie={false}
         sliceLimit={sliceLimit}
         onCardClick={onCardClick}
-        settings={{
-          beforeChange: handleBeforeChange,
-          afterChange: handleAfterChange,
-        }}
       />
     </div>
   </section>

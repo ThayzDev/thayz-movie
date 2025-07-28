@@ -11,6 +11,11 @@ interface DetailBannerProps {
 }
 
 const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
+  const [posterError, setPosterError] = React.useState(false);
+  const [castError, setCastError] = React.useState<{ [id: number]: boolean }>(
+    {}
+  );
+
   if (!movie) {
     return <StatusMessage notFound notFoundText="No movie available" />;
   }
@@ -19,7 +24,6 @@ const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
 
   return (
     <div className="w-full min-h-[500px] md:min-h-[800px] relative overflow-hidden">
-      {/* Background Image Section - 50% height */}
       <div className="absolute top-0 left-0 w-full h-1/2 overflow-hidden">
         <div
           className={`absolute inset-0 bg-center bg-no-repeat ${styles.detailBannerBg}`}
@@ -51,7 +55,6 @@ const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
           }}
         />
 
-        {/* Additional overlay for better text contrast */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
@@ -72,7 +75,7 @@ const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
 
       <div className="relative z-10 flex flex-col md:flex-row items-start justify-start px-4 md:px-8 lg:px-6 pt-10 md:pt-30 text-white w-full h-full">
         <div className="w-full md:w-1/3 mt-6 lg:mt-5 hidden md:flex justify-center lg:justify-start mb-6 md:mb-0 md:mr-6 lg:mr-2 lg:ml-12">
-          {movie.poster_path ? (
+          {movie.poster_path && !posterError ? (
             <Image
               className="rounded-4xl shadow-lg object-cover w-64 h-96 lg:w-90 lg:h-130"
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -80,10 +83,14 @@ const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
               width={400}
               height={600}
               priority
+              onError={() => setPosterError(true)}
             />
           ) : (
-            <div className="w-64 h-96 lg:w-80 lg:h-120 bg-gray-600 rounded-md flex items-center justify-center">
-              <span className="text-gray-300">No Image</span>
+            <div className="w-64 h-96 lg:w-80 lg:h-120 bg-[#0f0f0f] rounded-md flex items-center justify-center">
+              <div className="text-center">
+                <div className="text-gray-400 text-2xl mb-2">🎬</div>
+                <span className="text-gray-300 text-sm">No poster image</span>
+              </div>
             </div>
           )}
         </div>
@@ -129,14 +136,29 @@ const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
                   key={actor.id}
                   className="w-[100px] h-[200px] flex flex-col items-center flex-shrink-0"
                 >
-                  <Image
-                    src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`}
-                    alt={actor.name}
-                    objectFit="cover"
-                    style={{ borderRadius: "1rem", marginBottom: "0.25rem" }}
-                    width={100}
-                    height={150}
-                  />
+                  {actor.profile_path && !castError[actor.id] ? (
+                    <Image
+                      src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`}
+                      alt={actor.name}
+                      style={{
+                        borderRadius: "1rem",
+                        marginBottom: "0.25rem",
+                        objectFit: "cover",
+                      }}
+                      width={100}
+                      height={150}
+                      onError={() =>
+                        setCastError((prev) => ({ ...prev, [actor.id]: true }))
+                      }
+                    />
+                  ) : (
+                    <div className="w-[100px] h-[150px] bg-[#0f0f0f] rounded-lg flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="text-gray-400 text-lg">🎬</div>
+                        <span className="text-gray-300 text-xs">No image</span>
+                      </div>
+                    </div>
+                  )}
                   <p className="text-white text-xs md:text-sm mt-1 md:mt-2 break-words text-center w-full">
                     {actor.name}
                   </p>

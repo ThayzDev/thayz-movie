@@ -1,7 +1,7 @@
-import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { Movie } from "@/app/types/movie";
 import { TVSeries } from "@/app/types/tvSeries";
+import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function useHomeSliderHandlers() {
   const isDragging = useRef(false);

@@ -28,7 +28,7 @@ const BannerSlice: React.FC<BannerProps> = ({ movies, onOpenTrailer }) => {
     slidesPerView: 1,
     loop: true,
     speed: 1000,
-    // autoplay: { delay: 4000, disableOnInteraction: false }, // Tắt autoplay
+    // autoplay: { delay: 4000, disableOnInteraction: false },
     onSlideChange: (swiper: SwiperClass) => {
       setCurrentSlide(swiper.realIndex);
     },
@@ -51,7 +51,7 @@ const BannerSlice: React.FC<BannerProps> = ({ movies, onOpenTrailer }) => {
             <BannerSlide
               movie={movie}
               onOpenTrailer={onOpenTrailer}
-              isInitialLoad={currentSlide === 0 && index === 0} // Chỉ slide đầu tiên là initial load
+              isInitialLoad={currentSlide === 0 && index === 0}
               currentSlide={currentSlide}
               slideIndex={index}
               key={`slide-${movie.id}-${

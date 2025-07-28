@@ -4,6 +4,7 @@ import ShowMoreButton from "@/app/components/ShowMoreButton/ShowMoreButton";
 import { useTVSeriesHandlers } from "@/app/pages/tv-series/hooks/useTVSeriesHandlers";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import PageBanner from "../../components/Banner";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import { TVSeries } from "../../types/tvSeries";
@@ -11,12 +12,46 @@ import { fetchTVSeries } from "../../utils/api";
 import TVSeriesResults from "./components/TVSeriesResults";
 
 const TVSeriesPage = () => {
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [searchCategory, setSearchCategory] = useState<string>("trending");
-  const [inputValue, setInputValue] = useState<string>("");
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const urlQuery = searchParams.get("keyword") || "";
+  const urlType = searchParams.get("type");
+
+  const [searchQuery, setSearchQuery] = useState<string>(urlQuery);
+  const [searchCategory, setSearchCategory] = useState<string>(
+    urlQuery ? "search" : urlType ? urlType : "trending"
+  );
+  const [inputValue, setInputValue] = useState<string>(urlQuery);
   const [currentPage, setCurrentPage] = useState(1);
   const [allTVSeries, setAllTVSeries] = useState<TVSeries[]>([]);
   const [displayCount, setDisplayCount] = useState(25);
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (searchQuery && searchQuery.trim()) {
+      params.set("keyword", searchQuery);
+      setSearchParams(params);
+      return;
+    }
+
+    if (searchCategory === "trending") {
+      if (searchParams.get("type") === "trending") {
+        return;
+      } else {
+        setSearchParams({});
+        return;
+      }
+    }
+    if (searchCategory === "top_rated") {
+      params.set("type", "top_rated");
+      setSearchParams(params);
+      return;
+    }
+    if (searchCategory && searchCategory !== "trending") {
+      params.set("type", searchCategory);
+      setSearchParams(params);
+    }
+  }, [searchQuery, searchCategory, setSearchParams, searchParams]);
 
   const {
     data: tvSeries = [],
@@ -32,10 +67,9 @@ const TVSeriesPage = () => {
     refetchOnReconnect: false,
     enabled: true,
     placeholderData: (previousData) => previousData,
-    gcTime: 10 * 60 * 1000, // Giữ cache 10 phút
+    gcTime: 10 * 60 * 1000,
   });
 
-  // Effect riêng để reset khi search query thay đổi
   useEffect(() => {
     if (currentPage === 1) {
       setAllTVSeries([]);
@@ -45,7 +79,6 @@ const TVSeriesPage = () => {
   useEffect(() => {
     if (tvSeries !== undefined) {
       if (currentPage === 1) {
-        // Luôn set lại allTVSeries khi currentPage = 1 (search mới hoặc reset)
         setAllTVSeries(tvSeries);
         setDisplayCount(25);
       } else if (tvSeries.length > 0) {
@@ -108,7 +141,6 @@ const TVSeriesPage = () => {
               onLoadMore={handleLoadMore}
               isFetching={isFetching}
               canShowMore={canShowMore}
-              increment={25}
             />
           )}
         </div>

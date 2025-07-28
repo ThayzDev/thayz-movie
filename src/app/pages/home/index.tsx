@@ -81,7 +81,7 @@ const HomePage = () => {
     <div className="min-h-screen">
       <div className="overflow-x-hidden">
         <BannerSlice
-          movies={trendingMovies.slice(0, 5)}
+          movies={trendingMovies.slice(0, 7)}
           onOpenTrailer={handleOpenTrailer}
         />
 

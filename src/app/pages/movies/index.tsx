@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import PageBanner from "../../components/Banner";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import { Movie } from "../../types/movie";
@@ -12,12 +13,47 @@ import MovieResults from "./components/MovieResults";
 import { useMovieHandlers } from "./hooks/useMovieHandlers";
 
 const MoviesPage = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchCategory, setSearchCategory] = useState("trending");
-  const [inputValue, setInputValue] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const urlQuery = searchParams.get("keyword") || "";
+  const urlType = searchParams.get("type");
+
+  const [searchQuery, setSearchQuery] = useState(urlQuery);
+  const [searchCategory, setSearchCategory] = useState(
+    urlQuery ? "search" : urlType ? urlType : "trending"
+  );
+  const [inputValue, setInputValue] = useState(urlQuery);
   const [currentPage, setCurrentPage] = useState(1);
   const [allMovies, setAllMovies] = useState<Movie[]>([]);
   const [displayCount, setDisplayCount] = useState(25);
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (searchQuery && searchQuery.trim()) {
+      params.set("keyword", searchQuery);
+      setSearchParams(params);
+      return;
+    }
+
+    if (searchCategory === "trending") {
+      if (searchParams.get("type") === "trending") {
+        return;
+      } else {
+        setSearchParams({});
+        return;
+      }
+    }
+
+    if (searchCategory === "top_rated") {
+      params.set("type", "top_rated");
+      setSearchParams(params);
+      return;
+    }
+    if (searchCategory && searchCategory !== "trending") {
+      params.set("type", searchCategory);
+      setSearchParams(params);
+    }
+  }, [searchQuery, searchCategory, setSearchParams, searchParams]);
 
   const {
     data: movies = [],
@@ -33,10 +69,9 @@ const MoviesPage = () => {
     refetchOnReconnect: false,
     enabled: true,
     placeholderData: (previousData) => previousData,
-    gcTime: 10 * 60 * 1000, // Giữ cache 10 phút
+    gcTime: 10 * 60 * 1000,
   });
 
-  // Effect riêng để reset khi search query thay đổi
   useEffect(() => {
     if (currentPage === 1) {
       setAllMovies([]);
@@ -46,7 +81,6 @@ const MoviesPage = () => {
   useEffect(() => {
     if (movies !== undefined) {
       if (currentPage === 1) {
-        // Luôn set lại allMovies khi currentPage = 1 (search mới hoặc reset)
         setAllMovies(movies);
         setDisplayCount(25);
       } else if (movies.length > 0) {
@@ -59,7 +93,7 @@ const MoviesPage = () => {
         });
       }
     }
-  }, [movies, currentPage]); // Thêm searchQuery và searchCategory vào dependencies
+  }, [movies, currentPage]);
 
   const { handleCardClick, handleSearch, handleInputChange, handleLoadMore } =
     useMovieHandlers(
@@ -108,7 +142,6 @@ const MoviesPage = () => {
               onLoadMore={handleLoadMore}
               isFetching={isFetching}
               canShowMore={canShowMore}
-              increment={25}
             />
           )}
         </div>

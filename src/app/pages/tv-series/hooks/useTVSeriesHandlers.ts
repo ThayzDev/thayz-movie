@@ -26,7 +26,6 @@ export function useTVSeriesHandlers(
       setSearchQuery(query);
       setSearchCategory(category);
       setCurrentPage(1);
-      // Không reset allTVSeries ở đây, để useEffect xử lý
       setDisplayCount(25);
     },
     [setSearchQuery, setSearchCategory, setCurrentPage, setDisplayCount]

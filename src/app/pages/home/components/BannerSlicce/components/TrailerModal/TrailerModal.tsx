@@ -41,7 +41,6 @@ const TrailerModal: React.FC<TrailerModalProps> = ({
             src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1`}
             title="Trailer"
             frameBorder="0"
-            allow="autoplay; encrypted-media"
             allowFullScreen
             style={{ display: "block", margin: "0 auto" }}
           />
