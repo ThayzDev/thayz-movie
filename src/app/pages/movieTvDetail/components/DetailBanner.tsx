@@ -4,6 +4,8 @@ import { Movie } from "@/app/types/movie";
 import { TVSeries } from "@/app/types/tvSeries";
 import Image from "next/image";
 import React from "react";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import styles from "./DetailBanner.module.css";
 
 interface DetailBannerProps {
@@ -12,7 +14,11 @@ interface DetailBannerProps {
 
 const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
   const [posterError, setPosterError] = React.useState(false);
+  const [posterLoaded, setPosterLoaded] = React.useState(false);
   const [castError, setCastError] = React.useState<{ [id: number]: boolean }>(
+    {}
+  );
+  const [castLoaded, setCastLoaded] = React.useState<{ [id: number]: boolean }>(
     {}
   );
 
@@ -75,15 +81,29 @@ const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
       <div className="relative z-10 flex flex-col md:flex-row items-start justify-start px-4 md:px-8 lg:px-6 pt-10 md:pt-30 text-white w-full h-full">
         <div className="w-full md:w-1/3 mt-6 lg:mt-5 hidden md:flex justify-center lg:justify-start mb-6 md:mb-0 md:mr-6 lg:mr-2 lg:ml-12">
           {movie.poster_path && !posterError ? (
-            <Image
-              className="rounded-4xl shadow-lg object-cover w-64 h-96 lg:w-90 lg:h-130"
-              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-              alt={isMovie ? movie.title : movie.name}
-              width={400}
-              height={600}
-              priority
-              onError={() => setPosterError(true)}
-            />
+            <div className="relative w-64 h-96 lg:w-97 lg:h-145">
+              <Skeleton
+                height="100%"
+                width="100%"
+                baseColor="#374151"
+                highlightColor="#4B5563"
+                borderRadius="1.5rem"
+                className={`absolute inset-0 transition-opacity duration-500 ${
+                  posterLoaded ? "opacity-0" : "opacity-100"
+                }`}
+              />
+              <Image
+                className={`rounded-3xl shadow-lg object-cover w-full h-full transition-all duration-500 ${
+                  posterLoaded ? "opacity-100" : "opacity-0"
+                }`}
+                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                alt={isMovie ? movie.title : movie.name}
+                fill
+                priority
+                onError={() => setPosterError(true)}
+                onLoad={() => setPosterLoaded(true)}
+              />
+            </div>
           ) : (
             <div className="w-64 h-96 lg:w-80 lg:h-120 bg-black rounded-md flex items-center justify-center">
               <div className="text-center">
@@ -93,8 +113,8 @@ const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
           )}
         </div>
 
-        <div className="w-full md:w-2/3 lg:w-full text-left md:mt-8 lg:mt-2 lg:ml-6">
-          <h1 className="text-3xl md:text-4xl lg:text-7xl font-extrabold text-white mb-5 leading-tight">
+        <div className="w-full md:w-2/3  lg:w-full text-left md:mt-2 lg:mt-2 lg:ml-6">
+          <h1 className="text-3xl md:text-5xl lg:text-[81px] font-extrabold text-white mb-5 leading-tight">
             {isMovie ? movie.title : movie.name}
           </h1>
 
@@ -103,7 +123,7 @@ const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
               movie.genres.map((genre, index) => (
                 <span
                   key={index}
-                  className="inline-block bg-[#0f0f0f] text-white border-2 rounded-full px-4 py-[4px] mr-2 mb-2 text-sm"
+                  className="inline-block bg-[#0f0f0f] text-white border-2 rounded-full px-4 py-[2px] mr-2 mb-2 lg:text-base md:text-sm text-sm"
                 >
                   {genre.name}
                 </span>
@@ -117,7 +137,7 @@ const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
 
           <div className="mb-8 w-full">
             <p
-              className="text-sm md:text-base lg:text-base text-white leading-normal"
+              className="text-sm md:text-base lg:text-lg text-white leading-normal"
               style={{ wordBreak: "break-word" }}
             >
               {movie.overview || "No description available"}
@@ -135,22 +155,44 @@ const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
                   className="w-[100px] h-[200px] flex flex-col items-center flex-shrink-0"
                 >
                   {actor.profile_path && !castError[actor.id] ? (
-                    <Image
-                      src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`}
-                      alt={actor.name}
-                      style={{
-                        borderRadius: "1rem",
-                        marginBottom: "0.25rem",
-                        objectFit: "cover",
-                      }}
-                      width={100}
-                      height={150}
-                      onError={() =>
-                        setCastError((prev) => ({ ...prev, [actor.id]: true }))
-                      }
-                    />
+                    <div className="relative w-[100px] h-[150px] mb-1">
+                      <Skeleton
+                        height="100%"
+                        width="100%"
+                        baseColor="#374151"
+                        highlightColor="#4B5563"
+                        borderRadius="1rem"
+                        className={`absolute inset-0 transition-opacity duration-500 ${
+                          castLoaded[actor.id] ? "opacity-0" : "opacity-100"
+                        }`}
+                      />
+                      <Image
+                        src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`}
+                        alt={actor.name}
+                        fill
+                        style={{
+                          borderRadius: "1rem",
+                          objectFit: "cover",
+                        }}
+                        className={`transition-all duration-500 ${
+                          castLoaded[actor.id] ? "opacity-100" : "opacity-0"
+                        }`}
+                        onError={() =>
+                          setCastError((prev) => ({
+                            ...prev,
+                            [actor.id]: true,
+                          }))
+                        }
+                        onLoad={() =>
+                          setCastLoaded((prev) => ({
+                            ...prev,
+                            [actor.id]: true,
+                          }))
+                        }
+                      />
+                    </div>
                   ) : (
-                    <div className="w-[100px] h-[150px] bg-black rounded-lg flex items-center justify-center">
+                    <div className="w-[100px] h-[150px] bg-black rounded-lg flex items-center justify-center mb-1">
                       <div className="text-center">
                         <span className="text-gray-300 text-xs">No image</span>
                       </div>

@@ -4,6 +4,7 @@ import axios from "axios";
 // API Key của bạn từ TMDb
 const API_KEY = "4f85134e0e3de33d9af45eb9596b5735";
 const API_URL = "https://api.themoviedb.org/3/";
+const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
 // Tạo một instance của axios
 const axiosInstance = axios.create({
