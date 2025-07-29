@@ -40,8 +40,8 @@ const BannerPoster: React.FC<BannerPosterProps> = ({
           <Image
             className={`rounded-2xl lg:rounded-3xl xl:rounded-4xl shadow-lg w-56 h-84 lg:w-64 lg:h-96 xl:w-72 xl:h-108 2xl:w-100 2xl:h-140 object-cover ${
               isInitialLoad
-                ? `transform transition-all duration-1200 ease-out ${
-                    isLoaded ? "scale-100 opacity-100" : "scale-75 opacity-0"
+                ? `transform transition-all duration-500 ease-in-out ${
+                    isLoaded ? "scale-100 opacity-100" : "scale-50 opacity-0"
                   }`
                 : "opacity-100"
             }`}

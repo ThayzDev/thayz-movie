@@ -15,12 +15,26 @@ interface DetailBannerProps {
 const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
   const [posterError, setPosterError] = React.useState(false);
   const [posterLoaded, setPosterLoaded] = React.useState(false);
+  const [backgroundLoaded, setBackgroundLoaded] = React.useState(false);
   const [castError, setCastError] = React.useState<{ [id: number]: boolean }>(
     {}
   );
   const [castLoaded, setCastLoaded] = React.useState<{ [id: number]: boolean }>(
     {}
   );
+
+  // Preload background image
+  React.useEffect(() => {
+    if (movie.backdrop_path) {
+      setBackgroundLoaded(false);
+      const img = document.createElement("img");
+      img.onload = () => setBackgroundLoaded(true);
+      img.onerror = () => setBackgroundLoaded(true);
+      img.src = `https://image.tmdb.org/t/p/original${movie.backdrop_path}`;
+    } else {
+      setBackgroundLoaded(true); // No image to load
+    }
+  }, [movie.backdrop_path]);
 
   if (!movie) {
     return <StatusMessage notFound notFoundText="No movie available" />;
@@ -31,8 +45,26 @@ const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
   return (
     <div className="w-full min-h-[500px] md:min-h-[800px] relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-1/2 overflow-hidden">
+        {/* Skeleton Loading for Background */}
+        {!backgroundLoaded && (
+          <div className="absolute inset-0 z-0">
+            <Skeleton
+              height="100%"
+              width="100%"
+              baseColor="#374151"
+              highlightColor="#4B5563"
+              className="absolute inset-0"
+            />
+          </div>
+        )}
+
+        {/* Background Image */}
         <div
-          className={`absolute inset-0 bg-center bg-no-repeat ${styles.detailBannerBg}`}
+          className={`absolute inset-0 bg-center bg-no-repeat ${
+            styles.detailBannerBg
+          } transition-opacity duration-300 ${
+            backgroundLoaded ? "opacity-100" : "opacity-0"
+          }`}
           style={{
             background: movie.backdrop_path
               ? `#0f0f0f url(https://image.tmdb.org/t/p/original${movie.backdrop_path}) no-repeat center`

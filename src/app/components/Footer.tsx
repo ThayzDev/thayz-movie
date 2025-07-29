@@ -23,7 +23,6 @@ const Footer = () => {
         </div>
 
         <div className="flex justify-center">
-          {/* Desktop/Tablet - 3 columns */}
           <div className="hidden md:grid md:grid-cols-3 gap-30 text-center text-2xl font-bold max-w-4xl w-full">
             <ul className="space-y-5">
               <li>
@@ -123,11 +122,8 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Mobile - 2 rows */}
           <div className="md:hidden w-full max-w-2xl space-y-6">
-            {/* Row 1: Mục 1 + Mục 2 gộp lại */}
             <div className="grid grid-cols-2 gap-6 text-center text-sm font-bold">
-              {/* Mục 1 */}
               <div className="space-y-3">
                 <a
                   href="#"
@@ -155,7 +151,6 @@ const Footer = () => {
                 </a>
               </div>
 
-              {/* Mục 2 */}
               <div className="space-y-3">
                 <a
                   href="#"
@@ -178,7 +173,6 @@ const Footer = () => {
               </div>
             </div>
 
-            {/* Row 2: Mục 3 */}
             <div className="text-center">
               <div className="grid grid-cols-2 gap-6 text-sm font-bold">
                 <a

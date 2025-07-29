@@ -1,8 +1,7 @@
 import Navbar from "@/app/components/Navbar/Navbar";
 import HomePage from "@/app/pages/home";
-import MoviesPage from "@/app/pages/movies";
+import MediaPage from "@/app/pages/movies";
 import MovieTvDetailPage from "@/app/pages/movieTvDetail/[id]";
-import TVSeriesPage from "@/app/pages/tv-series";
 import { AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
 import React from "react";
@@ -33,8 +32,8 @@ const CustomRouter = () => {
         <AnimatePresence mode="wait">
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/movies" element={<MoviesPage />} />
-            <Route path="/tv-series" element={<TVSeriesPage />} />
+            <Route path="/movies" element={<MediaPage />} />
+            <Route path="/tv-series" element={<MediaPage />} />
             <Route path="/details/:type/:id" element={<MovieTvDetailPage />} />
           </Routes>
         </AnimatePresence>

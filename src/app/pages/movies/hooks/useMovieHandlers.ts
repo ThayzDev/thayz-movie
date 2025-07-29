@@ -1,5 +1,6 @@
 "use client";
 import { Movie } from "@/app/types/movie";
+import { TVSeries } from "@/app/types/tvSeries";
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -10,16 +11,21 @@ export function useMovieHandlers(
   setCurrentPage: (page: number | ((prev: number) => number)) => void,
   setDisplayCount: (count: number) => void,
   displayCount: number,
-  allMovies: Movie[],
-  movies: Movie[] | undefined
+  allItems: (Movie | TVSeries)[],
+  items: (Movie | TVSeries)[] | undefined,
+  contentType: "movie" | "tv"
 ) {
   const navigate = useNavigate();
 
   const handleCardClick = useCallback(
-    (movie: Movie) => {
-      navigate(`/details/movie/${movie.id}`);
+    (item: Movie | TVSeries) => {
+      if (contentType === "movie") {
+        navigate(`/details/movie/${item.id}`);
+      } else {
+        navigate(`/details/tv/${item.id}`);
+      }
     },
-    [navigate]
+    [navigate, contentType]
   );
 
   const handleSearch = useCallback(
@@ -42,12 +48,12 @@ export function useMovieHandlers(
   const handleLoadMore = useCallback(() => {
     const newDisplayCount = displayCount + 20;
 
-    if (newDisplayCount > allMovies.length && movies && movies.length === 20) {
+    if (newDisplayCount > allItems.length && items && items.length === 20) {
       setCurrentPage((prev) => prev + 1);
     }
 
     setDisplayCount(newDisplayCount);
-  }, [displayCount, allMovies.length, movies, setCurrentPage, setDisplayCount]);
+  }, [displayCount, allItems.length, items, setCurrentPage, setDisplayCount]);
 
   return {
     handleCardClick,

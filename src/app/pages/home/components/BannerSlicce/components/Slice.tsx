@@ -1,6 +1,7 @@
 "use client";
 import { Movie } from "@/app/types/movie";
 import React, { useEffect, useState } from "react";
+import "react-loading-skeleton/dist/skeleton.css";
 import { useNavigate } from "react-router-dom";
 import BannerPoster from "./BannerPoster";
 
@@ -22,6 +23,7 @@ const BannerSlide: React.FC<BannerSlideProps> = ({
   const navigate = useNavigate();
   const [posterDone, setPosterDone] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [backgroundLoaded, setBackgroundLoaded] = useState(false);
 
   useEffect(() => {
     setIsVisible(false);
@@ -35,6 +37,17 @@ const BannerSlide: React.FC<BannerSlideProps> = ({
 
     return () => clearTimeout(hideTimer);
   }, [currentSlide, slideIndex]);
+
+  useEffect(() => {
+    if (movie.backdrop_path) {
+      setBackgroundLoaded(false);
+      const img = new Image();
+      img.onload = () => setBackgroundLoaded(true);
+      img.src = `https://image.tmdb.org/t/p/original${movie.backdrop_path}`;
+    } else {
+      setBackgroundLoaded(true);
+    }
+  }, [movie.backdrop_path]);
 
   const handleWatchNow = () => {
     const type = movie.title ? "movie" : "tv";
