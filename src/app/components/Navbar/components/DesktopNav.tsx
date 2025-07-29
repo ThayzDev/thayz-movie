@@ -8,19 +8,17 @@ const DesktopNav = () => {
 
   return (
     <div className="hidden md:flex justify-between items-center w-full">
-      {/* Logo and Brand Name */}
       <div className="flex gap-3 items-center">
         <img src="/img/logo.png" alt="icon" className="h-14 w-14" />
         <NavLink
           to="/movies"
-          className="text-white hover:text-red-600 font-semibold text-2xl lg:text-4xl transition-colors duration-200"
+          className="text-white hover:text-red-600 font-semibold text-2xl lg:text-[43px] transition-colors duration-200"
         >
           theMovies
         </NavLink>
       </div>
 
-      {/* Navigation Links */}
-      <div className="flex space-x-8 text-2xl font-semibold">
+      <div className="flex space-x-8 text-[27px] font-semibold">
         {NAV_ITEMS.map((item) => (
           <NavLink
             key={item.to}

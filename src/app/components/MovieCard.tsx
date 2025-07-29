@@ -1,6 +1,8 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 import { Movie } from "@/app/types/movie";
 import { TVSeries } from "@/app/types/tvSeries";
@@ -15,6 +17,7 @@ const MovieCard = ({
   onCardClick?: () => void;
 }) => {
   const [imageError, setImageError] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const handleCardClick = () => {
     onCardClick && onCardClick();
@@ -29,16 +32,31 @@ const MovieCard = ({
       <div className="group cursor-pointer">
         <div className="aspect-[2/3] overflow-hidden rounded-3xl mb-3 shadow-lg relative w-full max-w-xs h-80">
           {!imageError && item.poster_path ? (
-            <Image
-              src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-              alt={isMovie ? (item as Movie).title : (item as TVSeries).name}
-              fill
-              className="object-cover transition-transform duration-500"
-              loading="lazy"
-              sizes="(max-width: 768px) 100vw, 33vw"
-              style={{ borderRadius: "1.5rem" }}
-              onError={handleImageError}
-            />
+            <>
+              <Skeleton
+                height="100%"
+                width="100%"
+                baseColor="#374151"
+                highlightColor="#4B5563"
+                borderRadius="1.5rem"
+                className={`absolute inset-0 transition-opacity duration-500 ${
+                  imageLoaded ? "opacity-0" : "opacity-100"
+                }`}
+              />
+              <Image
+                src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+                alt={isMovie ? (item as Movie).title : (item as TVSeries).name}
+                fill
+                className={`object-cover transition-all duration-500 ${
+                  imageLoaded ? "opacity-100" : "opacity-0"
+                }`}
+                loading="lazy"
+                sizes="(max-width: 768px) 100vw, 33vw"
+                style={{ borderRadius: "1.5rem" }}
+                onError={handleImageError}
+                onLoad={() => setImageLoaded(true)}
+              />
+            </>
           ) : (
             <div
               className="w-full h-full bg-black flex flex-col items-center justify-center text-gray-400"
