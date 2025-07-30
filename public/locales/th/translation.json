@@ -1,0 +1,29 @@
+{
+  "status": {
+    "loading": "กำลังโหลด...",
+    "errorTitle": "เกิดข้อผิดพลาด!",
+    "errorText": "ไม่สามารถโหลดเนื้อหาได้",
+    "notFound": "ไม่พบภาพยนตร์",
+    "trySearchOther": "ลองค้นหาอย่างอื่นดู"
+  },
+  "search": {
+    "placeholder": "กรอกคำค้นหา",
+    "button": "ค้นหา"
+  },
+  "home": "หน้าหลัก",
+  "movies": "ภาพยนตร์",
+  "tvSeries": "ซีรีส์ทีวี",
+  "watchNow": "รับชมเลย",
+  "watchTrailer": "ดูตัวอย่างหนัง",
+  "noOverview": "ไม่มีคำอธิบาย",
+  "noPosterImage": "ไม่มีโปสเตอร์",
+  "noGenresAvailable": "ไม่มีประเภท",
+  "casts": "นักแสดง",
+  "noImage": "ไม่มีรูปภาพ",
+  "trendingMovies": "ภาพยนตร์ยอดนิยม",
+  "topRatedMovies": "ภาพยนตร์เรตติ้งสูง",
+  "trendingTVSeries": "ซีรีส์ทีวียอดนิยม",
+  "topRatedTVSeries": "ซีรีส์ทีวีเรตติ้งสูง",
+  "viewMore": "ดูเพิ่มเติม",
+  "watchMore": "ดูเพิ่มเติม"
+}

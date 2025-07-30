@@ -1,0 +1,29 @@
+{
+  "status": {
+    "loading": "Đang tải...",
+    "errorTitle": "Đã xảy ra lỗi!",
+    "errorText": "Không thể tải nội dung",
+    "notFound": "Không tìm thấy phim nào",
+    "trySearchOther": "Hãy thử tìm kiếm nội dung khác"
+  },
+  "search": {
+    "placeholder": "Nhập từ khóa",
+    "button": "Tìm kiếm"
+  },
+  "home": "Trang chủ",
+  "movies": "Phim",
+  "tvSeries": "TV Series",
+  "watchNow": "Xem ngay",
+  "watchTrailer": "Xem trailer",
+  "noOverview": "Không có mô tả",
+  "noPosterImage": "Không có poster",
+  "noGenresAvailable": "Không có thể loại",
+  "casts": "Diễn viên",
+  "noImage": "Không có ảnh",
+  "trendingMovies": "Phim thịnh hành",
+  "topRatedMovies": "Phim được đánh giá cao",
+  "trendingTVSeries": "TV Series thịnh hành",
+  "topRatedTVSeries": "TV Series được đánh giá cao",
+  "viewMore": "Xem thêm",
+  "watchMore": "Xem thêm"
+}

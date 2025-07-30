@@ -2,6 +2,9 @@
 import PageBanner from "@/app/components/Banner";
 import SearchBar from "@/app/components/SearchBar/SearchBar";
 import ShowMoreButton from "@/app/components/ShowMoreButton/ShowMoreButton";
+import StatusMessage from "@/app/components/StatusMessage";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import MediaResult from "./components/MediaResult";
 import { useMediaData } from "./hooks/useMediaData";
@@ -16,6 +19,7 @@ interface MediaPageProps {
 
 const MediaPage: React.FC<MediaPageProps> = ({ type }) => {
   const location = useLocation();
+  const { t } = useTranslation();
   // Hooks
   const {
     inputValue,
@@ -48,10 +52,11 @@ const MediaPage: React.FC<MediaPageProps> = ({ type }) => {
   } = useMediaPage();
 
   // Custom handlers
+  const [showMoreLoading, setShowMoreLoading] = useState(false);
   const {
     handleSearch,
-    handleLoadMoreMovies,
-    handleLoadMoreTV,
+    handleLoadMoreMovies: baseHandleLoadMoreMovies,
+    handleLoadMoreTV: baseHandleLoadMoreTV,
     handleCardClick,
   } = useMediaHandlers({
     type,
@@ -67,6 +72,22 @@ const MediaPage: React.FC<MediaPageProps> = ({ type }) => {
     tvSeries,
     displayCount,
   });
+
+  // Custom Show More handler with delay
+  const handleLoadMoreMovies = () => {
+    setShowMoreLoading(true);
+    setTimeout(() => {
+      setShowMoreLoading(false);
+      baseHandleLoadMoreMovies();
+    }, 500);
+  };
+  const handleLoadMoreTV = () => {
+    setShowMoreLoading(true);
+    setTimeout(() => {
+      setShowMoreLoading(false);
+      baseHandleLoadMoreTV();
+    }, 500);
+  };
 
   // Effects
   useMediaEffects({
@@ -86,10 +107,14 @@ const MediaPage: React.FC<MediaPageProps> = ({ type }) => {
     setTVSeries,
   });
 
+  const isLoading = type === "movies" ? loadingMovies : loadingTV;
+  const items = type === "movies" ? movies : tvSeries;
+  const notFound = !isLoading && !!searchQuery && items.length === 0;
+
   return (
     <div className="bg-[#0f0f0f] min-h-screen flex flex-col pb-10">
       <PageBanner
-        title={type === "movies" ? "Movies" : "TV Series"}
+        title={type === "movies" ? t("movies") : t("tvSeries")}
         type={type === "movies" ? "movie" : "tv"}
       />
       <div className="w-full max-w-[1920px] mx-auto px-2 sm:px-10 md:px-10 lg:px-10 xl:px-10 2xl:px-15 ">
@@ -102,32 +127,38 @@ const MediaPage: React.FC<MediaPageProps> = ({ type }) => {
               inputValue={inputValue}
             />
           </div>
-          <>
-            <MediaResult
-              type={type}
-              items={type === "movies" ? movies : tvSeries}
-              loading={type === "movies" ? loadingMovies : loadingTV}
-              displayCount={displayCount}
-              onCardClick={handleCardClick}
-            />
-            {(() => {
-              const isLoading = type === "movies" ? loadingMovies : loadingTV;
-              const items = type === "movies" ? movies : tvSeries;
-              const canShowMore =
-                isLoading ||
-                displayCount < items.length ||
-                items.length % 20 === 0;
-              return (
-                <ShowMoreButton
-                  onLoadMore={
-                    type === "movies" ? handleLoadMoreMovies : handleLoadMoreTV
-                  }
-                  isFetching={isLoading}
-                  canShowMore={canShowMore}
-                />
-              );
-            })()}
-          </>
+          <StatusMessage
+            loading={isLoading}
+            notFound={notFound}
+            notFoundText={t("status.notFound")}
+          />
+
+          {!isLoading && !notFound && (
+            <>
+              <MediaResult
+                type={type}
+                items={items}
+                loading={isLoading && !showMoreLoading}
+                displayCount={displayCount}
+                onCardClick={handleCardClick}
+              />
+              {(() => {
+                const canShowMore =
+                  displayCount < items.length || items.length % 20 === 0;
+                return (
+                  <ShowMoreButton
+                    onLoadMore={
+                      type === "movies"
+                        ? handleLoadMoreMovies
+                        : handleLoadMoreTV
+                    }
+                    isFetching={showMoreLoading}
+                    canShowMore={canShowMore}
+                  />
+                );
+              })()}
+            </>
+          )}
         </div>
       </div>
     </div>

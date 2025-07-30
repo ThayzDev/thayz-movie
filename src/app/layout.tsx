@@ -1,3 +1,4 @@
+import "@/app/i18n";
 import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import QueryClientProvider from "./providers/QueryClientProvider";

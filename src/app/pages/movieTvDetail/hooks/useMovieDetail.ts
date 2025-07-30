@@ -1,19 +1,28 @@
 "use client";
+
 import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchMovieDetail, fetchTVDetail } from "../../../utils/api";
 
-export const useMovieDetail = () => {
+export function useMovieDetail() {
   const { id, type } = useParams();
   const navigate = useNavigate();
+  const { i18n } = useTranslation();
+  const language =
+    i18n.language === "vi"
+      ? "vi-VN"
+      : i18n.language === "th"
+      ? "th-TH"
+      : "en-US";
 
   const { data, isLoading, error } = useQuery({
-    queryKey: [type, id],
+    queryKey: [type, id, language],
     queryFn: () => {
       if (type === "movie") {
-        return fetchMovieDetail(id as string);
+        return fetchMovieDetail(id as string, language);
       } else if (type === "tv") {
-        return fetchTVDetail(id as string);
+        return fetchTVDetail(id as string, language);
       }
       return null;
     },
@@ -31,4 +40,4 @@ export const useMovieDetail = () => {
     type,
     handleSimilarClick,
   };
-};
+}

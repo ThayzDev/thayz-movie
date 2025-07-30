@@ -39,11 +39,12 @@ const axiosInstance = axios.create({
 export const fetchMovies = async (
   category: string,
   query: string = "",
-  page: number = 1
+  page: number = 1,
+  language: string = "en-US"
 ) => {
   try {
     let endpoint = `movie/${category}`;
-    const params: Record<string, unknown> = { page };
+    const params: Record<string, unknown> = { page, language };
     switch (category) {
       case "trending":
         endpoint = `trending/movie/week`;
@@ -78,11 +79,12 @@ export const fetchMovies = async (
 export const fetchTVSeries = async (
   category: string,
   query: string = "",
-  page: number = 1
+  page: number = 1,
+  language: string = "en-US"
 ) => {
   try {
     let endpoint = `tv/${category}`;
-    const params: Record<string, unknown> = { page };
+    const params: Record<string, unknown> = { page, language };
 
     switch (category) {
       case "trending":
@@ -114,11 +116,15 @@ export const fetchTVSeries = async (
   }
 };
 
-export const fetchMovieDetail = async (id: string) => {
+export const fetchMovieDetail = async (
+  id: string,
+  language: string = "en-US"
+) => {
   try {
     const response = await axiosInstance.get(`movie/${id}`, {
       params: {
         append_to_response: "credits,videos,similar,recommendations",
+        language,
       },
     });
     return response.data;
@@ -127,11 +133,12 @@ export const fetchMovieDetail = async (id: string) => {
   }
 };
 
-export const fetchTVDetail = async (id: string) => {
+export const fetchTVDetail = async (id: string, language: string = "en-US") => {
   try {
     const response = await axiosInstance.get(`tv/${id}`, {
       params: {
         append_to_response: "credits,videos,similar,recommendations",
+        language,
       },
     });
     return response.data;

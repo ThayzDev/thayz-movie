@@ -5,6 +5,7 @@ import { TVSeries } from "@/app/types/tvSeries";
 import { getImageUrl, getProfileUrl } from "@/app/utils/api";
 import Image from "next/image";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import styles from "./DetailBanner.module.css";
@@ -15,6 +16,7 @@ interface DetailBannerProps {
 
 const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
   const [posterError, setPosterError] = React.useState(false);
+  const { t } = useTranslation();
   const [posterLoaded, setPosterLoaded] = React.useState(false);
   const [backgroundLoaded, setBackgroundLoaded] = React.useState(false);
   const [castError, setCastError] = React.useState<{ [id: number]: boolean }>(
@@ -141,7 +143,9 @@ const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
           ) : (
             <div className="w-64 h-96 lg:w-80 lg:h-120 bg-black rounded-md flex items-center justify-center">
               <div className="text-center">
-                <span className="text-gray-300 text-xl">No poster image</span>
+                <span className="text-gray-300 text-xl">
+                  {t("noPosterImage")}
+                </span>
               </div>
             </div>
           )}
@@ -164,7 +168,7 @@ const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
               ))
             ) : (
               <span className="inline-block bg-[#0f0f0f] text-white border-2 rounded-full px-4 py-2 text-sm">
-                No genres available
+                {t("noGenresAvailable")}
               </span>
             )}
           </div>
@@ -180,7 +184,7 @@ const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
 
           <div className="mt-2">
             <h3 className="text-lg md:text-xl text-white font-semibold mb-2 md:mb-2">
-              Casts
+              {t("casts")}
             </h3>
             <div className="flex flex-row flex-wrap gap-4 items-start">
               {movie.credits.cast?.slice(0, 5).map((actor) => (
@@ -228,7 +232,9 @@ const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
                   ) : (
                     <div className="w-[100px] h-[150px] bg-black rounded-lg flex items-center justify-center mb-1">
                       <div className="text-center">
-                        <span className="text-gray-300 text-xs">No image</span>
+                        <span className="text-gray-300 text-xs">
+                          {t("noImage")}
+                        </span>
                       </div>
                     </div>
                   )}

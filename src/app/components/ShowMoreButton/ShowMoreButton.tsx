@@ -6,11 +6,14 @@ interface ShowMoreButtonProps {
   increment?: number;
 }
 
+import { useTranslation } from "react-i18next";
+
 const ShowMoreButton = ({
   onLoadMore,
   isFetching,
   canShowMore,
 }: ShowMoreButtonProps) => {
+  const { t } = useTranslation();
   if (!canShowMore) return null;
 
   return (
@@ -26,7 +29,6 @@ const ShowMoreButton = ({
           transition-all duration-300 
           transform hover:scale-105
           relative overflow-hidden
-          
         "
       >
         <div className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent opacity-50"></div>
@@ -34,11 +36,11 @@ const ShowMoreButton = ({
           {isFetching ? (
             <>
               <div className="w-5 h-5 border-2 border-red border-t-transparent rounded-full animate-spin"></div>
-              <span className="text-lg">Loading...</span>
+              <span className="text-lg">{t("status.loading")}</span>
             </>
           ) : (
             <>
-              <span className="text-lg font-semibold">Watch More</span>
+              <span className="text-lg font-semibold">{t("watchMore")}</span>
             </>
           )}
         </div>

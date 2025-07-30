@@ -8,22 +8,48 @@ import {
 } from "@/app/utils/api";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
 const TrailerList: React.FC = () => {
   const { id, type } = useParams();
+  const { i18n } = useTranslation();
+  const language =
+    i18n.language === "vi"
+      ? "vi-VN"
+      : i18n.language === "th"
+      ? "th-TH"
+      : "en-US";
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: [type, id],
+  const {
+    data: dataLang,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: [type, id, language, "trailer"],
     queryFn: () => {
       if (type === "movie") {
-        return fetchMovieDetail(id as string);
+        return fetchMovieDetail(id as string, language);
       } else if (type === "tv") {
-        return fetchTVDetail(id as string);
+        return fetchTVDetail(id as string, language);
       }
       return null;
     },
     enabled: !!id && !!type,
+  });
+
+  const { data: dataEn } = useQuery({
+    queryKey: [type, id, "en-US", "trailer"],
+    queryFn: () => {
+      if (type === "movie") {
+        return fetchMovieDetail(id as string, "en-US");
+      } else if (type === "tv") {
+        return fetchTVDetail(id as string, "en-US");
+      }
+      return null;
+    },
+    enabled: !!id && !!type && language !== "en-US",
+    staleTime: 1000 * 60 * 10,
   });
 
   if (isLoading) {
@@ -34,7 +60,10 @@ const TrailerList: React.FC = () => {
     return <StatusMessage error={error} errorText="Error loading trailers" />;
   }
 
-  const videos = data?.videos?.results || [];
+  let videos = dataLang?.videos?.results || [];
+  if ((!videos || videos.length === 0) && dataEn?.videos?.results?.length) {
+    videos = dataEn.videos.results;
+  }
 
   const videoTypes = [
     "Trailer",

@@ -1,0 +1,29 @@
+{
+  "status": {
+    "loading": "Loading...",
+    "errorTitle": "Oops! Something went wrong",
+    "errorText": "Failed to load content",
+    "notFound": "No movies found",
+    "trySearchOther": "Try searching for something else"
+  },
+  "search": {
+    "placeholder": "Enter keyword",
+    "button": "Search"
+  },
+  "home": "Home",
+  "movies": "Movies",
+  "tvSeries": "TV Series",
+  "watchNow": "Watch Now",
+  "watchTrailer": "Watch Trailer",
+  "noOverview": "No overview available",
+  "noPosterImage": "No poster image",
+  "noGenresAvailable": "No genres available",
+  "casts": "Casts",
+  "noImage": "No image",
+  "trendingMovies": "Trending Movies",
+  "topRatedMovies": "Top Rated Movies",
+  "trendingTVSeries": "Trending TV Series",
+  "topRatedTVSeries": "Top Rated TV Series",
+  "viewMore": "View More",
+  "watchMore": "Watch More"
+}

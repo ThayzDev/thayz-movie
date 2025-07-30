@@ -6,6 +6,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 import { Movie } from "@/app/types/movie";
 import { TVSeries } from "@/app/types/tvSeries";
+import { useTranslation } from "react-i18next";
 import { getImageUrl } from "../utils/api";
 
 const MovieCard = ({
@@ -19,6 +20,8 @@ const MovieCard = ({
 }) => {
   const [imageError, setImageError] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
+
+  const { t } = useTranslation();
 
   const handleCardClick = () => {
     onCardClick && onCardClick();
@@ -63,7 +66,7 @@ const MovieCard = ({
               className="w-full h-full bg-black flex flex-col items-center justify-center text-gray-400"
               style={{ borderRadius: "1.5rem" }}
             >
-              <div className="text-xl mt-1 opacity-60">No Image</div>
+              <div className="text-xl mt-1 opacity-60">{t("noImage")}</div>
             </div>
           )}
 

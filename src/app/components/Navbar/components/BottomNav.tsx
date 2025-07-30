@@ -1,10 +1,12 @@
 "use client";
+import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 import { NAV_ITEMS } from "../Constants/navItems";
 import { useNavActive } from "../hooks/useNavActive";
 
 const BottomNav = () => {
   const { isActive } = useNavActive();
+  const { t } = useTranslation();
 
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 bg-black/95 backdrop-blur-md border-t border-gray-800 z-50">
@@ -19,7 +21,7 @@ const BottomNav = () => {
                 : "text-gray-400 hover:text-red-600 after:absolute after:left-1/2 after:bottom-0 after:w-0 after:h-0.5 after:bg-red-600 after:transition-all after:duration-300 hover:after:w-full hover:after:left-0 after:rounded-full"
             }`}
           >
-            <span className="text-sm font-medium">{item.label}</span>
+            <span className="text-sm font-medium">{t(item.label)}</span>
             {isActive(item.to) && (
               <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-red-500"></div>
             )}

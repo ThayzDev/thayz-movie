@@ -2,6 +2,7 @@
 import { Movie } from "@/app/types/movie";
 import { getImageUrl } from "@/app/utils/api";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useNavigate } from "react-router-dom";
 import BannerPoster from "./BannerPoster";
@@ -12,6 +13,7 @@ interface BannerSlideProps {
   isInitialLoad?: boolean;
   currentSlide?: number;
   slideIndex?: number;
+  lang?: "en" | "vi" | "th";
 }
 
 const BannerSlide: React.FC<BannerSlideProps> = ({
@@ -20,8 +22,10 @@ const BannerSlide: React.FC<BannerSlideProps> = ({
   isInitialLoad = false,
   currentSlide = 0,
   slideIndex = 0,
+  lang = "en",
 }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [posterDone, setPosterDone] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [backgroundLoaded, setBackgroundLoaded] = useState(false);
@@ -97,7 +101,7 @@ const BannerSlide: React.FC<BannerSlideProps> = ({
             }`}
             style={{ transitionDelay: "0.3s" }}
           >
-            {movie.overview || "No overview available"}
+            {movie.overview || t("noOverview")}
           </p>
 
           <div
@@ -112,13 +116,13 @@ const BannerSlide: React.FC<BannerSlideProps> = ({
               className="bg-red-600 hover:bg-red-600 text-white w-[160px] h-[44px] sm:w-[180px] sm:h-[44px] md:w-[215px] md:h-[56px] lg:w-[215px] lg:h-[56px] xl:w-[215px] xl:h-[56px] text-base sm:text-base md:text-2xl lg:text-2xl xl:text-2xl leading-none rounded-full transition-all duration-300 font-semibold shadow-[0_0_7px_8px_rgba(255,0,0,0.4)] hover:shadow-[0_0_12px_14px_rgba(255,0,0,0.5)] transform hover:scale-105 whitespace-nowrap flex items-center justify-center"
               onClick={handleWatchNow}
             >
-              Watch Now
+              {t("watchNow")}
             </button>
             <button
               className="bg-transparent hover:bg-white hover:text-red-600 text-white border-2 border-white w-[160px] h-[44px] sm:w-[180px] sm:h-[44px] md:w-[215px] md:h-[56px] lg:w-[215px] lg:h-[56px] xl:w-[215px] xl:h-[56px] text-base  sm:text-base md:text-2xl lg:text-2xl xl:text-2xl leading-none font-semibold rounded-full shadow-2xl transform hover:scale-105 transition-all duration-200 whitespace-nowrap flex items-center justify-center"
               onClick={handleWatchTrailer}
             >
-              Watch Trailer
+              {t("watchTrailer")}
             </button>
           </div>
         </div>

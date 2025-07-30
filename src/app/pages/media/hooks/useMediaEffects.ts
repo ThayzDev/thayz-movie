@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 interface UseMediaEffectsParams {
   type: "movies" | "tv-series";
@@ -33,7 +34,30 @@ export function useMediaEffects({
   setMovies,
   setTVSeries,
 }: UseMediaEffectsParams) {
-  // Fetch data on page/keyword/type/forceSearch change
+  const { i18n } = useTranslation();
+  const language = i18n.language;
+
+  // Refetch movies when language changes
+  useEffect(() => {
+    if (type === "movies") {
+      setMovies([]);
+      setDisplayCount(20);
+      resetPages();
+      loadMovies(1, searchQuery);
+    }
+  }, [language, type]);
+
+  // Refetch TV series when language changes
+  useEffect(() => {
+    if (type === "tv-series") {
+      setTVSeries([]);
+      setDisplayCount(20);
+      resetPages();
+      loadTVSeries(1, searchQuery);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [language, type]);
+
   useEffect(() => {
     if (type === "movies") {
       loadMovies(currentPageMovies, searchQuery);

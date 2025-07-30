@@ -32,13 +32,8 @@ const CustomRouter = () => {
         <AnimatePresence mode="wait">
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/movies" element={<MediaPage type="movies" />} />{" "}
-            {/* Truyền tham số type="movies" */}
-            <Route
-              path="/tv-series"
-              element={<MediaPage type="tv-series" />}
-            />{" "}
-            {/* Truyền tham số type="tv-series" */}
+            <Route path="/movies" element={<MediaPage type="movies" />} />
+            <Route path="/tv-series" element={<MediaPage type="tv-series" />} />
             <Route path="/details/:type/:id" element={<MovieTvDetailPage />} />
           </Routes>
         </AnimatePresence>
