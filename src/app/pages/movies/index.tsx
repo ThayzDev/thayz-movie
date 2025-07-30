@@ -1,179 +1,36 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
-import { useLocation, useSearchParams } from "react-router-dom";
+import ShowMoreButton from "@/app/components/ShowMoreButton/ShowMoreButton";
 import PageBanner from "../../components/Banner";
 import SearchBar from "../../components/SearchBar/SearchBar";
-import { Movie } from "../../types/movie";
-import { TVSeries } from "../../types/tvSeries";
-import { fetchMovies, fetchTVSeries } from "../../utils/api";
-
-import ShowMoreButton from "@/app/components/ShowMoreButton/ShowMoreButton";
 import MovieResults from "./components/MovieResults";
+import { useMediaPage } from "./hooks/useMediaPage";
 import { useMovieHandlers } from "./hooks/useMovieHandlers";
 
 const MediaPage = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const urlQuery = searchParams.get("keyword") || "";
-  const urlType = searchParams.get("type");
-  const urlCategory = searchParams.get("category") || "movie";
-
-  const [searchQuery, setSearchQuery] = useState(urlQuery);
-  const [searchCategory, setSearchCategory] = useState(
-    urlQuery ? "search" : urlType ? urlType : "trending"
-  );
-  const [contentType, setContentType] = useState<"movie" | "tv">(
-    urlCategory === "tv" ? "tv" : "movie"
-  );
-  const [inputValue, setInputValue] = useState(urlQuery);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [allMovies, setAllMovies] = useState<Movie[]>([]);
-  const [allTVSeries, setAllTVSeries] = useState<TVSeries[]>([]);
-  const [displayCount, setDisplayCount] = useState(25);
-  const location = useLocation();
-
-  useEffect(() => {
-    const path = window.location.pathname;
-    const newContentType = path.includes("/tv-series") ? "tv" : "movie";
-
-    if (newContentType !== contentType) {
-      setContentType(newContentType);
-
-      if (!urlQuery && !urlType) {
-        setSearchQuery("");
-        setSearchCategory("trending");
-        setInputValue("");
-        setCurrentPage(1);
-        setDisplayCount(25);
-        setAllMovies([]);
-        setAllTVSeries([]);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    const path = location.pathname;
-    const newContentType = path.includes("/tv-series") ? "tv" : "movie";
-    if (newContentType !== contentType) {
-      setContentType(newContentType);
-    }
-  }, [location.pathname]);
-  useEffect(() => {
-    const isCleanNavigation = !urlQuery && !urlType;
-
-    if (isCleanNavigation && searchCategory === "trending") {
-      return;
-    }
-
-    const params = new URLSearchParams();
-
-    if (searchQuery && searchQuery.trim()) {
-      params.set("keyword", searchQuery);
-      setSearchParams(params);
-      return;
-    }
-
-    if (searchCategory === "top_rated") {
-      params.set("type", "top_rated");
-      setSearchParams(params);
-      return;
-    }
-
-    if (searchCategory && searchCategory !== "trending") {
-      params.set("type", searchCategory);
-      setSearchParams(params);
-      return;
-    }
-
-    if (searchCategory === "trending" && urlType === "trending") {
-      params.set("type", "trending");
-      setSearchParams(params);
-    }
-  }, [
+  const {
     searchQuery,
+    setSearchQuery,
     searchCategory,
+    setSearchCategory,
     contentType,
-    setSearchParams,
-    urlQuery,
-    urlType,
-  ]);
-
-  const {
-    data: movies = [],
-    isLoading: isLoadingMovies,
-    error: errorMovies,
-    isFetching: isFetchingMovies,
-  } = useQuery({
-    queryKey: ["movies", searchQuery, searchCategory, currentPage],
-    queryFn: () => fetchMovies(searchCategory, searchQuery, currentPage),
-    staleTime: 5 * 60 * 1000,
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
-    enabled: contentType === "movie",
-    placeholderData: (previousData) => previousData,
-    gcTime: 10 * 60 * 1000,
-  });
-
-  const {
-    data: tvSeries = [],
-    isLoading: isLoadingTV,
-    error: errorTV,
-    isFetching: isFetchingTV,
-  } = useQuery({
-    queryKey: ["tvSeries", searchQuery, searchCategory, currentPage],
-    queryFn: () => fetchTVSeries(searchCategory, searchQuery, currentPage),
-    staleTime: 5 * 60 * 1000,
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
-    enabled: contentType === "tv",
-    placeholderData: (previousData) => previousData,
-    gcTime: 10 * 60 * 1000,
-  });
-
-  useEffect(() => {
-    if (currentPage === 1) {
-      setAllMovies([]);
-      setAllTVSeries([]);
-    }
-  }, [searchQuery, searchCategory, contentType]);
-
-  useEffect(() => {
-    if (movies !== undefined && contentType === "movie") {
-      if (currentPage === 1) {
-        setAllMovies(movies);
-        setDisplayCount(25);
-      } else if (movies.length > 0) {
-        setAllMovies((prev) => {
-          const existingIds = new Set(prev.map((movie: Movie) => movie.id));
-          const newMovies = movies.filter(
-            (movie: Movie) => !existingIds.has(movie.id)
-          );
-          return [...prev, ...newMovies];
-        });
-      }
-    }
-  }, [movies, currentPage, contentType]);
-
-  useEffect(() => {
-    if (tvSeries !== undefined && contentType === "tv") {
-      if (currentPage === 1) {
-        setAllTVSeries(tvSeries);
-        setDisplayCount(25);
-      } else if (tvSeries.length > 0) {
-        setAllTVSeries((prev) => {
-          const existingIds = new Set(prev.map((tv: TVSeries) => tv.id));
-          const newTVSeries = tvSeries.filter(
-            (tv: TVSeries) => !existingIds.has(tv.id)
-          );
-          return [...prev, ...newTVSeries];
-        });
-      }
-    }
-  }, [tvSeries, currentPage, contentType]);
+    inputValue,
+    setInputValue,
+    currentPage,
+    setCurrentPage,
+    allMovies,
+    allTVSeries,
+    displayCount,
+    setDisplayCount,
+    movies,
+    isLoadingMovies,
+    errorMovies,
+    isFetchingMovies,
+    tvSeries,
+    isLoadingTV,
+    errorTV,
+    isFetchingTV,
+  } = useMediaPage();
 
   const { handleCardClick, handleSearch, handleInputChange, handleLoadMore } =
     useMovieHandlers(
@@ -188,6 +45,7 @@ const MediaPage = () => {
       contentType
     );
 
+  // Display the correct number of items based on displayCount
   const displayedItems =
     contentType === "movie"
       ? allMovies.slice(0, displayCount)
@@ -198,10 +56,18 @@ const MediaPage = () => {
   const error = contentType === "movie" ? errorMovies : errorTV;
   const isFetching = contentType === "movie" ? isFetchingMovies : isFetchingTV;
 
-  const canShowMore =
-    displayCount <
-      (contentType === "movie" ? allMovies.length : allTVSeries.length) ||
-    (currentData && currentData.length >= 20 && !isLoading);
+  // Ensure the "View More" button works by checking if there are more items
+  const canShowMore = (() => {
+    const allItems = contentType === "movie" ? allMovies : allTVSeries;
+
+    // If there are more items to load, show the button
+    if (displayCount < allItems.length) return true;
+
+    // If current data has 20 items (meaning there could be more)
+    if (currentData && currentData.length === 20 && !isLoading) return true;
+
+    return false;
+  })();
 
   return (
     <div className="bg-[#0f0f0f] min-h-screen">
@@ -221,16 +87,14 @@ const MediaPage = () => {
             />
           </div>
           <MovieResults
-            isLoading={
-              (isLoading && displayedItems.length === 0) ||
-              (isFetching && displayedItems.length === 0)
-            }
+            isLoading={isLoading || isFetching} // Check loading or fetching
             error={error}
             items={displayedItems}
             handleCardClick={handleCardClick}
             contentType={contentType}
           />
 
+          {/* Show "View More" button only if there's more data to load */}
           {canShowMore && (
             <ShowMoreButton
               onLoadMore={handleLoadMore}

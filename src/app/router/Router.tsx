@@ -1,6 +1,6 @@
 import Navbar from "@/app/components/Navbar/Navbar";
 import HomePage from "@/app/pages/home";
-import MediaPage from "@/app/pages/movies";
+import MediaPage from "@/app/pages/media"; // Đảm bảo đã import MediaPage
 import MovieTvDetailPage from "@/app/pages/movieTvDetail/[id]";
 import { AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
@@ -32,8 +32,13 @@ const CustomRouter = () => {
         <AnimatePresence mode="wait">
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/movies" element={<MediaPage />} />
-            <Route path="/tv-series" element={<MediaPage />} />
+            <Route path="/movies" element={<MediaPage type="movies" />} />{" "}
+            {/* Truyền tham số type="movies" */}
+            <Route
+              path="/tv-series"
+              element={<MediaPage type="tv-series" />}
+            />{" "}
+            {/* Truyền tham số type="tv-series" */}
             <Route path="/details/:type/:id" element={<MovieTvDetailPage />} />
           </Routes>
         </AnimatePresence>

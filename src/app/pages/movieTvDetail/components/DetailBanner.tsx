@@ -2,6 +2,7 @@
 import StatusMessage from "@/app/components/StatusMessage";
 import { Movie } from "@/app/types/movie";
 import { TVSeries } from "@/app/types/tvSeries";
+import { getImageUrl, getProfileUrl } from "@/app/utils/api";
 import Image from "next/image";
 import React from "react";
 import Skeleton from "react-loading-skeleton";
@@ -23,16 +24,15 @@ const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
     {}
   );
 
-  // Preload background image
   React.useEffect(() => {
     if (movie.backdrop_path) {
       setBackgroundLoaded(false);
       const img = document.createElement("img");
       img.onload = () => setBackgroundLoaded(true);
       img.onerror = () => setBackgroundLoaded(true);
-      img.src = `https://image.tmdb.org/t/p/original${movie.backdrop_path}`;
+      img.src = getImageUrl(movie.backdrop_path, "original");
     } else {
-      setBackgroundLoaded(true); // No image to load
+      setBackgroundLoaded(true);
     }
   }, [movie.backdrop_path]);
 
@@ -45,7 +45,6 @@ const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
   return (
     <div className="w-full min-h-[500px] md:min-h-[800px] relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-1/2 overflow-hidden">
-        {/* Skeleton Loading for Background */}
         {!backgroundLoaded && (
           <div className="absolute inset-0 z-0">
             <Skeleton
@@ -67,7 +66,10 @@ const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
           }`}
           style={{
             background: movie.backdrop_path
-              ? `#0f0f0f url(https://image.tmdb.org/t/p/original${movie.backdrop_path}) no-repeat center`
+              ? `#0f0f0f url(${getImageUrl(
+                  movie.backdrop_path,
+                  "original"
+                )}) no-repeat center`
               : "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
           }}
         />
@@ -128,7 +130,7 @@ const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
                 className={`rounded-3xl shadow-lg object-cover w-full h-full transition-all duration-500 ${
                   posterLoaded ? "opacity-100" : "opacity-0"
                 }`}
-                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                src={getImageUrl(movie.poster_path)}
                 alt={isMovie ? movie.title : movie.name}
                 fill
                 priority
@@ -199,7 +201,7 @@ const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
                         }`}
                       />
                       <Image
-                        src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`}
+                        src={getProfileUrl(actor.profile_path)}
                         alt={actor.name}
                         fill
                         style={{

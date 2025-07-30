@@ -3,22 +3,22 @@
 import StatusMessage from "@/app/components/StatusMessage";
 import BannerSlice from "@/app/pages/home/components/BannerSlicce/bannerSlice";
 import TrailerModal from "@/app/pages/home/components/BannerSlicce/components/TrailerModal/TrailerModal";
-import { useState } from "react";
 import {
   TopRatedMoviesSection,
   TopRatedTVSection,
   TrendingMoviesSection,
   TrendingTVSection,
 } from "./components/HomeSections";
-import { useHomeData } from "./hooks/useHomeData";
-import { useHomeSliderHandlers } from "./hooks/useHomeSliderHandlers";
+import { useHomePage } from "./hooks/useHomePage";
 
 const HomePage = () => {
-  const [showTrailer, setShowTrailer] = useState(false);
-  const [trailerMovieId, setTrailerMovieId] = useState<number>(0);
-  const [trailerType, setTrailerType] = useState<"movie" | "tv">("movie");
-
   const {
+    showTrailer,
+    trailerMovieId,
+    trailerType,
+    handleOpenTrailer,
+    handleCloseTrailer,
+    sliceLimit,
     trendingMovies,
     isLoadingMovies,
     errorMovies,
@@ -31,31 +31,8 @@ const HomePage = () => {
     topRatedTV,
     isLoadingTopRatedTV,
     errorTopRatedTV,
-  } = useHomeData("");
-
-  const handleOpenTrailer = (movieId: number, type: "movie" | "tv") => {
-    setTrailerMovieId(movieId);
-    setTrailerType(type);
-    setShowTrailer(true);
-  };
-
-  const handleCloseTrailer = () => {
-    setShowTrailer(false);
-  };
-
-  const getSliceLimit = () => {
-    if (typeof window !== "undefined") {
-      const width = window.innerWidth;
-      if (width >= 1024) return 15;
-      if (width >= 768) return 12;
-      return 8;
-    }
-    return 15;
-  };
-
-  const sliceLimit = getSliceLimit();
-
-  const { handleCardClick } = useHomeSliderHandlers();
+    handleCardClick,
+  } = useHomePage();
 
   if (
     isLoadingMovies ||

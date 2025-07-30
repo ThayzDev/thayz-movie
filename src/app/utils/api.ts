@@ -1,12 +1,32 @@
-// /utils/api.ts
 import axios from "axios";
+//API
+const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY || "";
+const API_URL = process.env.NEXT_PUBLIC_TMDB_API_URL || "";
 
-// API Key của bạn từ TMDb
-const API_KEY = "4f85134e0e3de33d9af45eb9596b5735";
-const API_URL = "https://api.themoviedb.org/3/";
-const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
+// Image and video URLs
+export const BASE_IMAGE_URL = "https://image.tmdb.org/t/p/";
+export const POSTER_SIZE = "w500";
+export const PROFILE_SIZE = "w200";
+export const YOUTUBE_EMBED_BASE = "https://www.youtube.com/embed/";
 
-// Tạo một instance của axios
+export function getImageUrl(path: string, size: string = POSTER_SIZE) {
+  if (!path) return "";
+  return `${BASE_IMAGE_URL}${size}${path}`;
+}
+
+export function getProfileUrl(path: string, size: string = PROFILE_SIZE) {
+  if (!path) return "";
+  return `${BASE_IMAGE_URL}${size}${path}`;
+}
+
+export function getYoutubeEmbedUrl(
+  key: string,
+  params = "?rel=0&modestbranding=1&showinfo=0"
+) {
+  if (!key) return "";
+  return `${YOUTUBE_EMBED_BASE}${key}${params}`;
+}
+
 const axiosInstance = axios.create({
   baseURL: API_URL,
   params: {
@@ -47,6 +67,7 @@ export const fetchMovies = async (
       params,
     });
 
+    // Ensure we return only the results
     return data.results || [];
   } catch (error) {
     console.error("Error fetching movies:", error);

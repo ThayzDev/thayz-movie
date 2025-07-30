@@ -6,6 +6,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 import { Movie } from "@/app/types/movie";
 import { TVSeries } from "@/app/types/tvSeries";
+import { getImageUrl } from "../utils/api";
 
 const MovieCard = ({
   item,
@@ -44,7 +45,7 @@ const MovieCard = ({
                 }`}
               />
               <Image
-                src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+                src={getImageUrl(item.poster_path, "w500")}
                 alt={isMovie ? (item as Movie).title : (item as TVSeries).name}
                 fill
                 className={`object-cover transition-all duration-500 ${

@@ -1,5 +1,15 @@
 import { fetchMovieDetail, fetchTVDetail } from "@/app/utils/api";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+export function useBackdropClose(onClose: () => void) {
+  return React.useCallback(
+    (e: React.MouseEvent) => {
+      if (e.target === e.currentTarget) {
+        onClose();
+      }
+    },
+    [onClose]
+  );
+}
 
 export function useTrailerKey(movieId: number, type: "movie" | "tv") {
   const [trailerKey, setTrailerKey] = useState<string | null>(null);

@@ -1,7 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
-import { fetchMovies, fetchTVSeries } from "@/app/utils/api";
 import { Movie } from "@/app/types/movie";
 import { TVSeries } from "@/app/types/tvSeries";
+import { fetchMovies, fetchTVSeries } from "@/app/utils/api";
+import { useQuery } from "@tanstack/react-query";
 
 export function useHomeData(searchQuery: string) {
   const {

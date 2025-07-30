@@ -19,6 +19,15 @@ const MovieResults = ({
   handleCardClick,
   contentType,
 }: MovieResultsProps) => {
+  // Debug: log số lượng items và trạng thái loading/error
+  console.log("[MovieResults]", {
+    isLoading,
+    error,
+    itemsLength: items.length,
+    items,
+    contentType,
+  });
+
   if (isLoading || error) {
     return (
       <StatusMessage

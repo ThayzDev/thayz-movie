@@ -1,5 +1,6 @@
 "use client";
 import { Movie } from "@/app/types/movie";
+import { getImageUrl } from "@/app/utils/api";
 import React, { useEffect, useState } from "react";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useNavigate } from "react-router-dom";
@@ -41,9 +42,9 @@ const BannerSlide: React.FC<BannerSlideProps> = ({
   useEffect(() => {
     if (movie.backdrop_path) {
       setBackgroundLoaded(false);
-      const img = new Image();
+      const img = new window.Image();
       img.onload = () => setBackgroundLoaded(true);
-      img.src = `https://image.tmdb.org/t/p/original${movie.backdrop_path}`;
+      img.src = getImageUrl(movie.backdrop_path, "original");
     } else {
       setBackgroundLoaded(true);
     }
@@ -65,7 +66,7 @@ const BannerSlide: React.FC<BannerSlideProps> = ({
         className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0 "
         style={{
           backgroundImage: movie.backdrop_path
-            ? `url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`
+            ? `url(${getImageUrl(movie.backdrop_path, "original")})`
             : "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
           backgroundSize: "cover",
         }}

@@ -1,4 +1,5 @@
 "use client";
+import { getImageUrl } from "@/app/utils/api";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
@@ -45,7 +46,7 @@ const BannerPoster: React.FC<BannerPosterProps> = ({
                   }`
                 : "opacity-100"
             }`}
-            src={`https://image.tmdb.org/t/p/w500${poster_path}`}
+            src={getImageUrl(poster_path)}
             alt={title}
             width={320}
             height={480}

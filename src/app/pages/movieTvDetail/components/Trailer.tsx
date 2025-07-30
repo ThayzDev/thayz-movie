@@ -1,7 +1,11 @@
 "use client";
 
 import StatusMessage from "@/app/components/StatusMessage";
-import { fetchMovieDetail, fetchTVDetail } from "@/app/utils/api";
+import {
+  fetchMovieDetail,
+  fetchTVDetail,
+  getYoutubeEmbedUrl,
+} from "@/app/utils/api";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useParams } from "react-router-dom";
@@ -61,7 +65,7 @@ const TrailerList: React.FC = () => {
             <div className="w-full">
               <div className="relative">
                 <iframe
-                  src={`https://www.youtube.com/embed/${video.key}?rel=0&modestbranding=1&showinfo=0`}
+                  src={getYoutubeEmbedUrl(video.key)}
                   title={video.name}
                   frameBorder="0"
                   allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"

@@ -51,7 +51,6 @@ const StatusMessage: React.FC<StatusMessageProps> = ({
     return (
       <div className="min-h-screen bg-gray-800 flex items-center justify-center">
         <div className="text-center p-8 bg-black/70 backdrop-blur-md rounded-xl border border-gray-500/50">
-          <div className="text-6xl mb-4 text-gray-400">🎬</div>
           <h2 className="text-xl font-semibold text-gray-300 mb-2">
             {notFoundText}
           </h2>

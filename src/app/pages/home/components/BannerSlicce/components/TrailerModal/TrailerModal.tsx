@@ -1,6 +1,11 @@
 "use client";
+import { getYoutubeEmbedUrl } from "@/app/utils/api";
 import React from "react";
-import { useEscClose, useTrailerKey } from "./hooks/useTrailerModalHooks";
+import {
+  useBackdropClose,
+  useEscClose,
+  useTrailerKey,
+} from "./hooks/useTrailerModalHooks";
 
 interface TrailerModalProps {
   movieId: number;
@@ -15,12 +20,7 @@ const TrailerModal: React.FC<TrailerModalProps> = ({
 }) => {
   const trailerKey = useTrailerKey(movieId, type);
   useEscClose(onClose);
-
-  const handleBackdropClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
-  };
+  const handleBackdropClick = useBackdropClose(onClose);
 
   return (
     <div
@@ -38,7 +38,7 @@ const TrailerModal: React.FC<TrailerModalProps> = ({
         {trailerKey ? (
           <iframe
             className="w-[90%] max-w-[730px] h-[530px]"
-            src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1`}
+            src={getYoutubeEmbedUrl(trailerKey, "?autoplay=1")}
             title="Trailer"
             frameBorder="0"
             allowFullScreen
