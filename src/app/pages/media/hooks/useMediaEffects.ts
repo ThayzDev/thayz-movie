@@ -55,21 +55,18 @@ export function useMediaEffects({
       resetPages();
       loadTVSeries(1, searchQuery);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [language, type]);
 
   useEffect(() => {
     if (type === "movies") {
       loadMovies(currentPageMovies, searchQuery);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPageMovies, type, searchQuery, forceSearch]);
 
   useEffect(() => {
     if (type === "tv-series") {
       loadTVSeries(currentPageTV, searchQuery);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPageTV, type, searchQuery, forceSearch]);
 
   // Sync keyword from URL

@@ -13,9 +13,11 @@ const Footer = () => {
       <div className="relative z-10 container mx-auto px-4 md:px-6 lg:px-4 h-full flex flex-col justify-center">
         <div className="text-center mb-8 md:mb-10 lg:mb-12">
           <div className="flex items-center justify-center space-x-2 mb-4">
-            <div className="w-8 h-8 md:w-10 md:h-10 bg-green-500 rounded-full flex items-center justify-center">
-              <div className="w-0 h-0 border-l-[6px] md:border-l-[8px] border-l-white border-t-[4px] md:border-t-[6px] border-t-transparent border-b-[4px] md:border-b-[6px] border-b-transparent ml-1"></div>
-            </div>
+            <img
+              src="/img/logo.png"
+              alt="theMovies"
+              className="w-8 h-8 md:w-10 md:h-10"
+            />
             <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-white">
               theMovies
             </h1>

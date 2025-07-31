@@ -35,11 +35,11 @@ const BannerPoster: React.FC<BannerPosterProps> = ({
   }, [poster_path, onAnimationComplete, isInitialLoad]);
 
   return (
-    <div className="w-full flex justify-center items-center h-full transform-gpu">
+    <div className="w-full flex justify-center items-center h-full transform-gpu mr-80">
       <div className="relative">
         {poster_path ? (
           <Image
-            className={`rounded-2xl lg:rounded-3xl xl:rounded-4xl shadow-lg w-56 h-84 lg:w-64 lg:h-96 xl:w-72 xl:h-108 2xl:w-100 2xl:h-140 object-cover ${
+            className={`rounded-2xl lg:rounded-3xl xl:rounded-4xl shadow-lg object-cover ${
               isInitialLoad
                 ? `transform transition-all duration-500 ease-in-out ${
                     isLoaded ? "scale-100 opacity-100" : "scale-50 opacity-0"
@@ -48,20 +48,32 @@ const BannerPoster: React.FC<BannerPosterProps> = ({
             }`}
             src={getImageUrl(poster_path)}
             alt={title}
-            width={320}
-            height={480}
+            width={400}
+            height={530}
+            style={{
+              width: "350px",
+              height: "530px",
+              maxWidth: "100%",
+              maxHeight: "90vh",
+            }}
             priority
             onLoad={() => setIsLoaded(true)}
           />
         ) : (
           <div
-            className={`w-56 h-84 lg:w-64 lg:h-96 xl:w-72 xl:h-108 2xl:w-80 2xl:h-120 bg-gray-600 rounded-2xl lg:rounded-3xl xl:rounded-4xl flex items-center justify-center ${
+            className={`bg-gray-600 rounded-2xl lg:rounded-3xl xl:rounded-4xl flex items-center justify-center ${
               isInitialLoad
                 ? `transform transition-all duration-1200 ease-out ${
                     isLoaded ? "scale-100 opacity-100" : "scale-75 opacity-0"
                   }`
                 : "opacity-100"
             }`}
+            style={{
+              width: "600px",
+              height: "900px",
+              maxWidth: "100%",
+              maxHeight: "90vh",
+            }}
           >
             <span className="text-gray-300 text-sm">No Image</span>
           </div>

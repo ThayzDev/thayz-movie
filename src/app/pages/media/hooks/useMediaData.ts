@@ -19,8 +19,8 @@ export function useMediaData(type: "movies" | "tv-series") {
       : "en-US";
 
   const loadMovies = useCallback(
-    async (page: number, keyword?: string) => {
-      setLoadingMovies(true);
+    async (page: number, keyword?: string, isLoadMore: boolean = false) => {
+      if (!isLoadMore) setLoadingMovies(true);
       try {
         const category = keyword ? "search" : "popular";
         const newMovies = await fetchMovies(
@@ -33,15 +33,15 @@ export function useMediaData(type: "movies" | "tv-series") {
       } catch (error) {
         console.error("Error loading movies:", error);
       } finally {
-        setLoadingMovies(false);
+        if (!isLoadMore) setLoadingMovies(false);
       }
     },
     [language]
   );
 
   const loadTVSeries = useCallback(
-    async (page: number, keyword?: string) => {
-      setLoadingTV(true);
+    async (page: number, keyword?: string, isLoadMore: boolean = false) => {
+      if (!isLoadMore) setLoadingTV(true);
       try {
         const category = keyword ? "search" : "popular";
         const newTVSeries = await fetchTVSeries(
@@ -54,7 +54,7 @@ export function useMediaData(type: "movies" | "tv-series") {
       } catch (error) {
         console.error("Error loading TV series:", error);
       } finally {
-        setLoadingTV(false);
+        if (!isLoadMore) setLoadingTV(false);
       }
     },
     [language]

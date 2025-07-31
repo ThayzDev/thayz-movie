@@ -90,10 +90,22 @@ const MediaPage: React.FC<MediaPageProps> = ({ type }) => {
   };
 
   // Effects
+  // Bọc lại loadMovies/loadTVSeries để truyền đúng tham số isLoadMore cho useMediaEffects
+  const loadMoviesWithLoadMore = (
+    page: number,
+    keyword?: string,
+    isLoadMore: boolean = false
+  ) => loadMovies(page, keyword, isLoadMore);
+  const loadTVSeriesWithLoadMore = (
+    page: number,
+    keyword?: string,
+    isLoadMore: boolean = false
+  ) => loadTVSeries(page, keyword, isLoadMore);
+
   useMediaEffects({
     type,
-    loadMovies,
-    loadTVSeries,
+    loadMovies: loadMoviesWithLoadMore,
+    loadTVSeries: loadTVSeriesWithLoadMore,
     currentPageMovies,
     currentPageTV,
     searchQuery,

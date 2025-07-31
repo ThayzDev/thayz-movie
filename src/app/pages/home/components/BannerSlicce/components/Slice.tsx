@@ -85,7 +85,7 @@ const BannerSlide: React.FC<BannerSlideProps> = ({
               isVisible
                 ? "translate-y-0 opacity-100"
                 : "-translate-y-10 opacity-0"
-            } lg:max-w-[77%] xl:max-w-[80%] 2xl:max-w-[80%]`}
+            } lg:max-w-[95%] xl:max-w-[95%] 2xl:max-w-[95%]`}
             style={{
               wordBreak: "break-word",
             }}
@@ -94,7 +94,7 @@ const BannerSlide: React.FC<BannerSlideProps> = ({
           </h1>
 
           <p
-            className={`text-sm md:text-sm lg:text-base xl:text-2xl text-white font-medium max-w-full md:max-w-2xl lg:max-w-3xl xl:max-w-4xl leading-relaxed transform transition-all duration-1000 ease-out ${
+            className={`line-clamp-4  text-sm md:text-sm lg:text-sm xl:text-lg text-white font-medium max-w-full md:max-w-2xl lg:max-w-3xl xl:max-w-4xl leading-snug transform transition-all duration-1000 ease-out ${
               isVisible
                 ? "translate-y-0 opacity-100"
                 : "-translate-y-10 opacity-0"
@@ -127,7 +127,7 @@ const BannerSlide: React.FC<BannerSlideProps> = ({
           </div>
         </div>
 
-        <div className="hidden lg:block lg:w-1/3 mr-20">
+        <div className="hidden lg:block">
           <BannerPoster
             poster_path={movie.poster_path}
             title={movie.title}
