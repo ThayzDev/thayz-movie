@@ -59,7 +59,6 @@ const DetailBanner: React.FC<DetailBannerProps> = ({ movie }) => {
           </div>
         )}
 
-        {/* Background Image */}
         <div
           className={`absolute inset-0 bg-center bg-no-repeat ${
             styles.detailBannerBg

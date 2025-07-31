@@ -14,6 +14,7 @@ interface UseMediaHandlersParams {
   movies: any[];
   tvSeries: any[];
   displayCount: number;
+  setShowMoreLoading: (v: boolean) => void;
 }
 
 export function useMediaHandlers({
@@ -29,10 +30,10 @@ export function useMediaHandlers({
   movies,
   tvSeries,
   displayCount,
+  setShowMoreLoading,
 }: UseMediaHandlersParams) {
   const navigate = useNavigate();
 
-  // Search handler with navigation and reset
   const handleSearch = useCallback(
     (query: string) => {
       setDisplayCount(20);
@@ -65,18 +66,38 @@ export function useMediaHandlers({
   );
 
   const handleLoadMoreMovies = useCallback(() => {
-    if (displayCount >= movies.length) {
-      setCurrentPageMovies((prevPage: number) => prevPage + 1);
-    }
-    setDisplayCount((prev: number) => prev + 20);
-  }, [displayCount, movies.length, setCurrentPageMovies, setDisplayCount]);
+    setShowMoreLoading(true);
+    setTimeout(() => {
+      setShowMoreLoading(false);
+      if (displayCount >= movies.length) {
+        setCurrentPageMovies((prevPage: number) => prevPage + 1);
+      }
+      setDisplayCount((prev: number) => prev + 20);
+    }, 500);
+  }, [
+    displayCount,
+    movies.length,
+    setCurrentPageMovies,
+    setDisplayCount,
+    setShowMoreLoading,
+  ]);
 
   const handleLoadMoreTV = useCallback(() => {
-    if (displayCount >= tvSeries.length) {
-      setCurrentPageTV((prevPage: number) => prevPage + 1);
-    }
-    setDisplayCount((prev: number) => prev + 20);
-  }, [displayCount, tvSeries.length, setCurrentPageTV, setDisplayCount]);
+    setShowMoreLoading(true);
+    setTimeout(() => {
+      setShowMoreLoading(false);
+      if (displayCount >= tvSeries.length) {
+        setCurrentPageTV((prevPage: number) => prevPage + 1);
+      }
+      setDisplayCount((prev: number) => prev + 20);
+    }, 500);
+  }, [
+    displayCount,
+    tvSeries.length,
+    setCurrentPageTV,
+    setDisplayCount,
+    setShowMoreLoading,
+  ]);
 
   const handleCardClick = useCallback(
     (item: any, itemType: "movie" | "tv") => {

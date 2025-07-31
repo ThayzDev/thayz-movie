@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 export const SectionHeader = ({
   title,
-  subtitle,
+
   icon,
   showViewMore = false,
   viewMorePath,

@@ -51,12 +51,11 @@ const MediaPage: React.FC<MediaPageProps> = ({ type }) => {
     resetPages,
   } = useMediaPage();
 
-  // Custom handlers
   const [showMoreLoading, setShowMoreLoading] = useState(false);
   const {
     handleSearch,
-    handleLoadMoreMovies: baseHandleLoadMoreMovies,
-    handleLoadMoreTV: baseHandleLoadMoreTV,
+    handleLoadMoreMovies,
+    handleLoadMoreTV,
     handleCardClick,
   } = useMediaHandlers({
     type,
@@ -71,27 +70,9 @@ const MediaPage: React.FC<MediaPageProps> = ({ type }) => {
     movies,
     tvSeries,
     displayCount,
+    setShowMoreLoading,
   });
 
-  // Custom Show More handler with delay
-  const handleLoadMoreMovies = () => {
-    setShowMoreLoading(true);
-    setTimeout(() => {
-      setShowMoreLoading(false);
-      baseHandleLoadMoreMovies();
-    }, 500);
-  };
-  const handleLoadMoreTV = () => {
-    setShowMoreLoading(true);
-    setTimeout(() => {
-      setShowMoreLoading(false);
-      baseHandleLoadMoreTV();
-    }, 500);
-  };
-
-  // Effects
-  // Bọc lại loadMovies/loadTVSeries để truyền đúng tham số isLoadMore cho useMediaEffects
-  // Truyền thẳng loadMovies, loadTVSeries từ useMediaData (nhận 3 tham số)
   const loadMoviesWithLoadMore = loadMovies;
   const loadTVSeriesWithLoadMore = loadTVSeries;
 
