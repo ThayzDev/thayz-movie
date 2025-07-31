@@ -94,7 +94,7 @@ const BannerSlide: React.FC<BannerSlideProps> = ({
           </h1>
 
           <p
-            className={`line-clamp-4  text-sm md:text-sm lg:text-sm xl:text-lg text-white font-medium max-w-full md:max-w-2xl lg:max-w-3xl xl:max-w-4xl leading-snug transform transition-all duration-1000 ease-out ${
+            className={`line-clamp-3 md:line-clamp-4 lg:line-clamp-4 xl:line-clamp-4 text-sm md:text-sm lg:text-sm xl:text-lg text-white font-medium max-w-full md:max-w-2xl lg:max-w-3xl xl:max-w-4xl leading-snug transform transition-all duration-1000 ease-out ${
               isVisible
                 ? "translate-y-0 opacity-100"
                 : "-translate-y-10 opacity-0"

@@ -29,7 +29,13 @@ export function useMediaData(type: "movies" | "tv-series") {
           page,
           language
         );
-        setMovies((prevMovies) => [...prevMovies, ...newMovies]);
+        setMovies((prevMovies) => {
+          if (page === 1) return newMovies;
+
+          const prevIds = new Set(prevMovies.map((m: Movie) => m.id));
+          const filtered = newMovies.filter((m: Movie) => !prevIds.has(m.id));
+          return [...prevMovies, ...filtered];
+        });
       } catch (error) {
         console.error("Error loading movies:", error);
       } finally {
@@ -50,7 +56,14 @@ export function useMediaData(type: "movies" | "tv-series") {
           page,
           language
         );
-        setTVSeries((prevTVSeries) => [...prevTVSeries, ...newTVSeries]);
+        setTVSeries((prevTVSeries) => {
+          if (page === 1) return newTVSeries;
+          const prevIds = new Set(prevTVSeries.map((m: TVSeries) => m.id));
+          const filtered = newTVSeries.filter(
+            (m: TVSeries) => !prevIds.has(m.id)
+          );
+          return [...prevTVSeries, ...filtered];
+        });
       } catch (error) {
         console.error("Error loading TV series:", error);
       } finally {
