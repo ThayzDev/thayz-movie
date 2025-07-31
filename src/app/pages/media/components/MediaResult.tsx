@@ -19,9 +19,9 @@ const MediaResult: React.FC<MediaResultProps> = ({
   onCardClick,
 }) => {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-6 gap-x-1 gap-y-10 pb-16">
+    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-6 gap-x-0 gap-y-10 pb-16">
       {loading
-        ? Array.from({ length: 20 }).map((_, idx) => (
+        ? Array.from({ length: displayCount }).map((_, idx) => (
             <div key={idx} className="w-full h-80">
               <Skeleton height="100%" width="100%" />
             </div>

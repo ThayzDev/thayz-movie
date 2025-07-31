@@ -34,7 +34,7 @@ const MovieCard = ({
   return (
     <div className="px-2 cursor-pointer" onClick={handleCardClick}>
       <div className="group cursor-pointer">
-        <div className="aspect-[2/3] overflow-hidden rounded-3xl mb-3 shadow-lg relative w-full max-w-xs h-80">
+        <div className="aspect-[2/3] overflow-hidden rounded-3xl mb-3 shadow-lg relative w-full max-w-xs h-73">
           {!imageError && item.poster_path ? (
             <>
               <Skeleton

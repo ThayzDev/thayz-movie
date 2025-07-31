@@ -91,16 +91,9 @@ const MediaPage: React.FC<MediaPageProps> = ({ type }) => {
 
   // Effects
   // Bọc lại loadMovies/loadTVSeries để truyền đúng tham số isLoadMore cho useMediaEffects
-  const loadMoviesWithLoadMore = (
-    page: number,
-    keyword?: string,
-    isLoadMore: boolean = false
-  ) => loadMovies(page, keyword, isLoadMore);
-  const loadTVSeriesWithLoadMore = (
-    page: number,
-    keyword?: string,
-    isLoadMore: boolean = false
-  ) => loadTVSeries(page, keyword, isLoadMore);
+  // Truyền thẳng loadMovies, loadTVSeries từ useMediaData (nhận 3 tham số)
+  const loadMoviesWithLoadMore = loadMovies;
+  const loadTVSeriesWithLoadMore = loadTVSeries;
 
   useMediaEffects({
     type,
@@ -150,7 +143,12 @@ const MediaPage: React.FC<MediaPageProps> = ({ type }) => {
               <MediaResult
                 type={type}
                 items={items}
-                loading={isLoading && !showMoreLoading}
+                loading={
+                  isLoading &&
+                  !showMoreLoading &&
+                  ((type === "movies" && currentPageMovies === 1) ||
+                    (type === "tv-series" && currentPageTV === 1))
+                }
                 displayCount={displayCount}
                 onCardClick={handleCardClick}
               />

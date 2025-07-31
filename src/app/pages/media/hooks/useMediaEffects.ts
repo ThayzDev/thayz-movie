@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 
 interface UseMediaEffectsParams {
   type: "movies" | "tv-series";
-  loadMovies: (page: number, keyword?: string) => void;
-  loadTVSeries: (page: number, keyword?: string) => void;
+  loadMovies: (page: number, keyword?: string, isLoadMore?: boolean) => void;
+  loadTVSeries: (page: number, keyword?: string, isLoadMore?: boolean) => void;
   currentPageMovies: number;
   currentPageTV: number;
   searchQuery: string;
@@ -57,15 +57,18 @@ export function useMediaEffects({
     }
   }, [language, type]);
 
+  // Khi chuyển trang (load more), truyền isLoadMore=true để không set loading
   useEffect(() => {
     if (type === "movies") {
-      loadMovies(currentPageMovies, searchQuery);
+      const isLoadMore = currentPageMovies > 1;
+      loadMovies(currentPageMovies, searchQuery, isLoadMore);
     }
   }, [currentPageMovies, type, searchQuery, forceSearch]);
 
   useEffect(() => {
     if (type === "tv-series") {
-      loadTVSeries(currentPageTV, searchQuery);
+      const isLoadMore = currentPageTV > 1;
+      loadTVSeries(currentPageTV, searchQuery, isLoadMore);
     }
   }, [currentPageTV, type, searchQuery, forceSearch]);
 
