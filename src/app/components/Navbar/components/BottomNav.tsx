@@ -1,12 +1,15 @@
 "use client";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
+
 import { NAV_ITEMS } from "../Constants/navItems";
+import { useLanguageToggle } from "../hooks/useLanguageToggle";
 import { useNavActive } from "../hooks/useNavActive";
 
 const BottomNav = () => {
   const { isActive } = useNavActive();
   const { t } = useTranslation();
+  const { currentLang, handleToggleLang } = useLanguageToggle();
 
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 bg-black/95 backdrop-blur-md border-t border-gray-800 z-50">
@@ -27,6 +30,22 @@ const BottomNav = () => {
             )}
           </NavLink>
         ))}
+
+        <button
+          onClick={handleToggleLang}
+          className="flex flex-row items-center gap-1 px-1 py-0.5 rounded bg-transparent hover:bg-[#232323] transition-colors duration-200 ml-1"
+          style={{ minWidth: 0 }}
+          title="Change language"
+        >
+          <img
+            src={currentLang.flag}
+            alt={currentLang.label}
+            className="w-6 h-6 rounded-full"
+          />
+          <span className="text-white text-[15px] font-bold">
+            {currentLang.label}
+          </span>
+        </button>
       </div>
     </div>
   );

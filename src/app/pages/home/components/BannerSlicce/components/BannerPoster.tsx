@@ -35,7 +35,7 @@ const BannerPoster: React.FC<BannerPosterProps> = ({
   }, [poster_path, onAnimationComplete, isInitialLoad]);
 
   return (
-    <div className="w-full flex justify-center items-center h-full transform-gpu mr-80">
+    <div className="w-full flex justify-center items-center h-full transform-gpu mr-120 mt-4">
       <div className="relative">
         {poster_path ? (
           <Image
@@ -48,11 +48,11 @@ const BannerPoster: React.FC<BannerPosterProps> = ({
             }`}
             src={getImageUrl(poster_path)}
             alt={title}
-            width={400}
-            height={530}
+            width={380}
+            height={560}
             style={{
-              width: "350px",
-              height: "530px",
+              width: "380px",
+              height: "560px",
               maxWidth: "100%",
               maxHeight: "90vh",
             }}
